@@ -51,6 +51,8 @@ export const Colors = {
   },
 } as const;
 
+export type ColorTokens = (typeof Colors)['light'] | (typeof Colors)['dark'];
+
 // ─── Spacing (8pt grid) ──────────────────────────────────
 
 export const Spacing = {
