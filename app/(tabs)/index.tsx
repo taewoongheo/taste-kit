@@ -1,8 +1,6 @@
-import { AnimatedPressable, Button, Card } from '@/components/ui';
-import { Sheet } from '@/components/ui';
-import { Spacing, Typography } from '@/constants/design-tokens';
-import { useThemeColor } from '@/hooks/use-theme-color';
-import { useEntrance } from '@/hooks/useEntrance';
+import { AnimatedPressable, Button, Card, Sheet } from '@/components/ui';
+import { Spacing, Typography } from '@/constants';
+import { useEntrance, useThemeColor } from '@/hooks';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';

@@ -1,5 +1,5 @@
-import { type ColorTokens, Colors, Layout, Spacing, Typography } from '@/constants/design-tokens';
-import { useScalePress } from '@/hooks/useScalePress';
+import { type ColorTokens, Colors, Layout, Spacing, Typography } from '@/constants';
+import { useScalePress } from '@/hooks';
 import type { ReactNode } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View, useColorScheme } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';

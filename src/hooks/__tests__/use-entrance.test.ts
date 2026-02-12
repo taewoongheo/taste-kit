@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-native';
-import { useEntrance } from '../useEntrance';
+import { useEntrance } from '../use-entrance';
 
 describe('useEntrance', () => {
   it('returns animatedStyle, enter, reset, and isVisible', () => {

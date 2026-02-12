@@ -1,5 +1,5 @@
-import { Colors } from '@/constants/design-tokens';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Colors } from '@/constants';
+import { useColorScheme } from './use-color-scheme';
 
 export function useThemeColor(
   colorName: keyof typeof Colors.light & keyof typeof Colors.dark,

@@ -1,6 +1,6 @@
 import '@/lib/i18n';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { AppProviders } from '@/providers/AppProviders';
+import { useColorScheme } from '@/hooks';
+import { AppProviders } from '@/providers';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';

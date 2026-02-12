@@ -1,5 +1,5 @@
-import { Colors } from '@/constants/design-tokens';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Colors } from '@/constants';
+import { useColorScheme } from '@/hooks';
 import { Tabs } from 'expo-router';
 
 export default function TabLayout() {

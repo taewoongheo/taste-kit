@@ -1,4 +1,4 @@
-import { Springs } from '@/constants/animations';
+import { Springs } from '@/constants';
 import { useEffect } from 'react';
 import type { ViewStyle } from 'react-native';
 import {

@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-native';
 import * as Haptics from 'expo-haptics';
-import { useScalePress } from '../useScalePress';
+import { useScalePress } from '../use-scale-press';
 
 describe('useScalePress', () => {
   it('returns gesture, animatedStyle, and pressed', () => {

@@ -1,5 +1,5 @@
-import { Spacing, Typography } from '@/constants/design-tokens';
-import { useThemeColor } from '@/hooks/use-theme-color';
+import { Spacing, Typography } from '@/constants';
+import { useThemeColor } from '@/hooks';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function ExploreScreen() {

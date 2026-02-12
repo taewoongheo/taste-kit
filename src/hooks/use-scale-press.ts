@@ -1,4 +1,4 @@
-import { Springs, TapFeedback } from '@/constants/animations';
+import { Springs, TapFeedback } from '@/constants';
 import * as Haptics from 'expo-haptics';
 import { useCallback } from 'react';
 import type { ViewStyle } from 'react-native';

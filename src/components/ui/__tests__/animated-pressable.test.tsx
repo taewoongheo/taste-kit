@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react-native';
 import type React from 'react';
 import { Text } from 'react-native';
-import { AnimatedPressable } from '../AnimatedPressable';
+import { AnimatedPressable } from '../animated-pressable';
 
 // GestureHandlerRootView is needed for gesture-handler components
 jest.mock('react-native-gesture-handler', () => {

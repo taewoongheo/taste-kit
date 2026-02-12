@@ -2,7 +2,7 @@ import type BottomSheet from '@gorhom/bottom-sheet';
 import { render, screen } from '@testing-library/react-native';
 import { createRef } from 'react';
 import { Text } from 'react-native';
-import { Sheet } from '../Sheet';
+import { Sheet } from '../sheet';
 
 jest.mock('@gorhom/bottom-sheet', () => {
   const { View } = require('react-native');

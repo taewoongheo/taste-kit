@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native';
 import { Text } from 'react-native';
-import { Card } from '../Card';
+import { Card } from '../card';
 
 describe('Card', () => {
   it('renders children', () => {

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native';
 import { Text } from 'react-native';
-import { Button } from '../Button';
+import { Button } from '../button';
 
 jest.mock('react-native-gesture-handler', () => {
   const actual = jest.requireActual('react-native-gesture-handler');
