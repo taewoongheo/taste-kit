@@ -1,50 +1,54 @@
-# Welcome to your Expo app 👋
+# taste-kit
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Expo React Native boilerplate for building interaction-focused mobile apps. Comes with a Claude Code AI workflow — agents, commands, skills, and hooks — designed for apps where interaction quality is the core differentiator.
 
-## Get started
+## Stack
 
-1. Install dependencies
+- **Expo SDK 54** + Expo Router (file-based routing)
+- **React Native Reanimated 4** (UI-thread animations)
+- **React Native Gesture Handler 2.x** (Gesture API)
+- **TypeScript** (strict mode)
 
-   ```bash
-   npm install
-   ```
+## AI Workflow
 
-2. Start the app
+4-layer architecture installed globally at `~/.claude/`:
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+Agents (WHO)     — ideator, planner, developer, interaction, qa, release
+Commands (WHAT)  — /plan, /build, /verify, /checkpoint, /tdd, /qa, ...
+Skills (KNOWLEDGE) — apple-hig, reanimated, coding-standards, ...
+Hooks (AUTO)     — console.log check, prettier, verify-before-commit, ...
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+See [AI-WORKFLOW.md](./AI-WORKFLOW.md) for full details.
 
-## Learn more
+### Quick Workflow
 
-To learn more about developing your project with Expo, look at the following resources:
+```
+/plan [feature]       → architecture + UI patterns + phased tasks
+/build [screen]       → implementation
+/verify               → typecheck + lint
+/checkpoint           → verify + commit
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Setup
 
-## Join the community
+```bash
+npm install
+npx expo start
+```
 
-Join our community of developers creating universal apps.
+## Project Structure
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```
+app/                  # Expo Router screens
+components/ui/        # Reusable UI components
+hooks/                # Custom hooks
+lib/                  # Utilities, API clients
+constants/            # Design tokens, animation presets
+types/                # TypeScript definitions
+```
+
+## License
+
+Private
