@@ -1,0 +1,18 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "done": "Done",
+    "delete": "Delete",
+    "save": "Save",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "empty": "Nothing here yet"
+  },
+  "tabs": {
+    "home": "Home",
+    "explore": "Explore"
+  }
+}
