@@ -51,4 +51,4 @@ types/                # TypeScript definitions
 
 ## License
 
-Private
+MIT

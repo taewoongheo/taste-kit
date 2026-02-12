@@ -51,4 +51,4 @@ types/                # TypeScript 타입 정의
 
 ## 라이선스
 
-Private
+MIT
