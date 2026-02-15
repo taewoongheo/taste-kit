@@ -2,6 +2,7 @@ export { AnimatedPressable, type AnimatedPressableProps } from './animated-press
 export { Button, type ButtonProps, type ButtonVariant, type ButtonSize } from './button';
 export { ErrorBoundary } from './error-boundary';
 export { Card, type CardProps, type CardVariant } from './card';
+export { Dialog, type DialogProps, type DialogAction } from './dialog';
 export { ListItem, type ListItemProps } from './list-item';
 export { Sheet, type SheetProps } from './sheet';
 export { Skeleton, type SkeletonProps } from './skeleton';
