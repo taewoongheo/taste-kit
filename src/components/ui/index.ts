@@ -4,6 +4,7 @@ export { ErrorBoundary } from './error-boundary';
 export { Image, type ImageProps } from './image';
 export { KeyboardAvoidingView, type KeyboardAvoidingViewProps } from './keyboard-avoiding-view';
 export { Card, type CardProps, type CardVariant } from './card';
+export { Collapse, type CollapseProps } from './collapse';
 export { Dialog, type DialogProps, type DialogAction } from './dialog';
 export { Divider, type DividerProps } from './divider';
 export { ListItem, type ListItemProps } from './list-item';
