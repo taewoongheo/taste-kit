@@ -1,12 +1,12 @@
+import { Text } from '@/components/ui/text';
 import { Colors, Layout, Spacing, Typography } from '@/constants';
+import { useColorScheme } from '@/hooks';
 import { useState } from 'react';
 import {
   TextInput as RNTextInput,
   type TextInputProps as RNTextInputProps,
   StyleSheet,
-  Text,
   View,
-  useColorScheme,
 } from 'react-native';
 
 export interface TextInputProps extends Omit<RNTextInputProps, 'style'> {
@@ -28,7 +28,7 @@ export function TextInput({ label, error, disabled = false, ...inputProps }: Tex
   return (
     <View style={styles.container}>
       {label && (
-        <Text style={[Typography.subheadline, styles.label, { color: colors.textSecondary }]}>
+        <Text variant="subheadline" color="textSecondary">
           {label}
         </Text>
       )}
@@ -55,7 +55,7 @@ export function TextInput({ label, error, disabled = false, ...inputProps }: Tex
         ]}
       />
       {error && (
-        <Text style={[Typography.caption1, styles.error, { color: colors.destructive }]}>
+        <Text variant="caption1" color="destructive">
           {error}
         </Text>
       )}
@@ -67,16 +67,10 @@ const styles = StyleSheet.create({
   container: {
     gap: Spacing.xs,
   },
-  label: {
-    marginLeft: Spacing.xs,
-  },
   input: {
     height: 44,
     paddingHorizontal: Spacing.md,
     borderRadius: Layout.radiusSm,
     borderWidth: 1,
-  },
-  error: {
-    marginLeft: Spacing.xs,
   },
 });

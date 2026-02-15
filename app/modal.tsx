@@ -1,14 +1,14 @@
-import { Spacing, Typography } from '@/constants';
+import { Text } from '@/components/ui';
+import { Spacing } from '@/constants';
 import { useThemeColor } from '@/hooks';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 export default function ModalScreen() {
   const backgroundColor = useThemeColor('background');
-  const textColor = useThemeColor('text');
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
-      <Text style={[Typography.body, { color: textColor }]}>Modal</Text>
+      <Text>Modal</Text>
     </View>
   );
 }

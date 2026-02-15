@@ -1,12 +1,12 @@
-import { AnimatedPressable, Button, Card } from '@/components/ui';
+import { AnimatedPressable, Button, Card, Text } from '@/components/ui';
 import { Springs, Timings } from '@/constants/animations';
-import { Spacing, Typography } from '@/constants/design-tokens';
+import { Spacing } from '@/constants/design-tokens';
 import { useEntrance, useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
 import { type ThemeMode, useAppStore } from '@/stores';
 import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -18,8 +18,6 @@ const themeModes: { mode: ThemeMode; label: string }[] = [
 
 export default function ExploreScreen() {
   const bg = useThemeColor('background');
-  const text = useThemeColor('text');
-  const secondary = useThemeColor('textSecondary');
   const accent = useThemeColor('accent');
 
   const { top } = useSafeAreaInsets();
@@ -37,8 +35,8 @@ export default function ExploreScreen() {
     >
       <View style={styles.headerRow}>
         <View style={styles.headerText}>
-          <Text style={[Typography.largeTitle, { color: text }]}>Tokens</Text>
-          <Text style={[Typography.subheadline, styles.subtitle, { color: secondary }]}>
+          <Text variant="largeTitle">Tokens</Text>
+          <Text variant="subheadline" color="textSecondary">
             디자인 토큰 & 애니메이션 프리셋
           </Text>
         </View>
@@ -55,8 +53,6 @@ export default function ExploreScreen() {
 }
 
 function TokensContent() {
-  const text = useThemeColor('text');
-  const secondary = useThemeColor('textSecondary');
   const accent = useThemeColor('accent');
   const themeMode = useAppStore((s) => s.themeMode);
   const setThemeMode = useAppStore((s) => s.setThemeMode);
@@ -69,11 +65,13 @@ function TokensContent() {
     <>
       {/* Spring Presets */}
       <Animated.View style={[styles.section, s1.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Spring Presets</Text>
+        <Text variant="headline">Spring Presets</Text>
         {Object.entries(Springs).map(([name, config]) => (
           <Card key={name} variant="filled">
-            <Text style={[Typography.headline, { color: accent }]}>{name}</Text>
-            <Text style={[Typography.footnote, { color: secondary }]}>
+            <Text variant="headline" color="accent">
+              {name}
+            </Text>
+            <Text variant="footnote" color="textSecondary">
               damping: {config.damping} · stiffness: {config.stiffness}
             </Text>
           </Card>
@@ -82,11 +80,13 @@ function TokensContent() {
 
       {/* Timing Presets */}
       <Animated.View style={[styles.section, s2.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Timing Presets</Text>
+        <Text variant="headline">Timing Presets</Text>
         {Object.entries(Timings).map(([name, config]) => (
           <Card key={name} variant="filled">
-            <Text style={[Typography.headline, { color: accent }]}>{name}</Text>
-            <Text style={[Typography.footnote, { color: secondary }]}>
+            <Text variant="headline" color="accent">
+              {name}
+            </Text>
+            <Text variant="footnote" color="textSecondary">
               duration: {config.duration}ms
             </Text>
           </Card>
@@ -95,7 +95,7 @@ function TokensContent() {
 
       {/* Theme Mode */}
       <Animated.View style={[styles.section, s2.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Theme</Text>
+        <Text variant="headline">Theme</Text>
         <View style={styles.themeRow}>
           {themeModes.map(({ mode, label }) => (
             <Button
@@ -111,7 +111,7 @@ function TokensContent() {
 
       {/* Spacing */}
       <Animated.View style={[styles.section, s3.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Spacing</Text>
+        <Text variant="headline">Spacing</Text>
         <View style={styles.spacingRow}>
           {(['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const).map((key) => (
             <View key={key} style={styles.spacingItem}>
@@ -121,8 +121,12 @@ function TokensContent() {
                   { width: Spacing[key], height: Spacing[key], backgroundColor: accent },
                 ]}
               />
-              <Text style={[Typography.caption1, { color: secondary }]}>{key}</Text>
-              <Text style={[Typography.caption2, { color: secondary }]}>{Spacing[key]}</Text>
+              <Text variant="caption1" color="textSecondary">
+                {key}
+              </Text>
+              <Text variant="caption2" color="textSecondary">
+                {Spacing[key]}
+              </Text>
             </View>
           ))}
         </View>
@@ -139,9 +143,6 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
     gap: Spacing.md,
     paddingBottom: Spacing['2xl'],
-  },
-  subtitle: {
-    marginTop: Spacing.xs,
   },
   section: {
     gap: Spacing.sm,

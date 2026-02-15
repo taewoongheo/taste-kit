@@ -1,7 +1,9 @@
 import { AnimatedPressable } from '@/components/ui/animated-pressable';
-import { Colors, Layout, Spacing, Typography } from '@/constants';
+import { Text } from '@/components/ui/text';
+import { Layout, Spacing } from '@/constants';
+import { useThemeColor } from '@/hooks';
 import type { ReactNode } from 'react';
-import { StyleSheet, Text, View, useColorScheme } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 export interface ListItemProps {
   /** Primary text */
@@ -31,27 +33,23 @@ export function ListItem({
   separator = true,
   testID,
 }: ListItemProps) {
-  const colorScheme = useColorScheme() ?? 'light';
-  const colors = Colors[colorScheme];
+  const separatorColor = useThemeColor('separator');
 
   const content = (
     <View
       testID={testID}
       style={[
         styles.container,
-        separator && { borderBottomWidth: Layout.separator, borderBottomColor: colors.separator },
+        separator && { borderBottomWidth: Layout.separator, borderBottomColor: separatorColor },
       ]}
     >
       {icon && <View style={styles.icon}>{icon}</View>}
       <View style={styles.body}>
-        <Text
-          style={[Typography.body, { color: disabled ? colors.textTertiary : colors.text }]}
-          numberOfLines={1}
-        >
+        <Text variant="body" color={disabled ? 'textTertiary' : 'text'} numberOfLines={1}>
           {title}
         </Text>
         {subtitle && (
-          <Text style={[Typography.footnote, { color: colors.textSecondary }]} numberOfLines={1}>
+          <Text variant="footnote" color="textSecondary" numberOfLines={1}>
             {subtitle}
           </Text>
         )}

@@ -1,4 +1,4 @@
-import { Colors, Layout, Spacing, Typography } from '@/constants';
+import { Colors, Layout, Spacing } from '@/constants';
 import { Springs } from '@/constants/animations';
 import {
   type ReactNode,
@@ -9,8 +9,10 @@ import {
   useRef,
   useState,
 } from 'react';
-import { StyleSheet, Text, useColorScheme } from 'react-native';
+import { StyleSheet, useColorScheme } from 'react-native';
 import Animated, { FadeOut, SlideInUp } from 'react-native-reanimated';
+
+import { Text } from './text';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
@@ -84,7 +86,7 @@ function ToastItem({ toast }: { toast: ActiveToast }) {
         { backgroundColor: colors.backgroundElevated, borderLeftColor: accentColor },
       ]}
     >
-      <Text style={[Typography.subheadline, { color: colors.text }]}>{toast.message}</Text>
+      <Text variant="subheadline">{toast.message}</Text>
     </Animated.View>
   );
 }

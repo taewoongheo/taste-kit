@@ -1,5 +1,6 @@
-import { Button } from '@/components/ui';
-import { Spacing, Typography } from '@/constants';
+import { Button, Text } from '@/components/ui';
+import { Spacing } from '@/constants';
+import { useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
 import type { ReactNode } from 'react';
 import { useCallback, useRef } from 'react';
@@ -8,15 +9,11 @@ import {
   type NativeSyntheticEvent,
   ScrollView,
   StyleSheet,
-  Text,
   View,
-  useColorScheme,
   useWindowDimensions,
 } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { Colors } from '@/constants/design-tokens';
 import { OnboardingIndicator } from './onboarding-indicator';
 
 export interface OnboardingStep {
@@ -46,8 +43,7 @@ export function OnboardingFunnel({
 }: OnboardingFunnelProps) {
   const { width } = useWindowDimensions();
   const { top, bottom } = useSafeAreaInsets();
-  const colorScheme = useColorScheme() ?? 'light';
-  const colors = Colors[colorScheme];
+  const bg = useThemeColor('background');
 
   const scrollRef = useRef<ScrollView>(null);
   const currentIndex = useRef(0);
@@ -80,7 +76,7 @@ export function OnboardingFunnel({
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View style={[styles.container, { backgroundColor: bg }]}>
       {onSkip && (
         <View style={[styles.skipContainer, { top: top + Spacing.sm }]}>
           <Button title="건너뛰기" variant="ghost" size="sm" onPress={onSkip} />
@@ -98,10 +94,10 @@ export function OnboardingFunnel({
         {steps.map((step) => (
           <View key={step.title} style={[styles.step, { width }]}>
             {step.content && <View style={styles.content}>{step.content}</View>}
-            <Text style={[Typography.title1, styles.title, { color: colors.text }]}>
+            <Text variant="title1" align="center">
               {step.title}
             </Text>
-            <Text style={[Typography.body, styles.description, { color: colors.textSecondary }]}>
+            <Text variant="body" color="textSecondary" align="center">
               {step.description}
             </Text>
           </View>
@@ -134,17 +130,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: Spacing.xl,
+    gap: Spacing.sm,
   },
   content: {
     marginBottom: Spacing.xl,
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: Spacing.sm,
-  },
-  description: {
-    textAlign: 'center',
-    lineHeight: 24,
   },
   footer: {
     paddingHorizontal: Spacing.md,

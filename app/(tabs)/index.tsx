@@ -9,12 +9,12 @@ import {
   SearchBar,
   Sheet,
   Skeleton,
+  Text,
   TextInput,
   Toggle,
-  Text as UIText,
   useToast,
 } from '@/components/ui';
-import { Spacing, Typography } from '@/constants';
+import { Spacing } from '@/constants';
 import { useEntrance, useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
 import { useAppStore } from '@/stores';
@@ -22,14 +22,12 @@ import { Ionicons } from '@expo/vector-icons';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { router } from 'expo-router';
 import { useCallback, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   const bg = useThemeColor('background');
-  const text = useThemeColor('text');
-  const secondary = useThemeColor('textSecondary');
   const accent = useThemeColor('accent');
 
   const { top } = useSafeAreaInsets();
@@ -53,8 +51,8 @@ export default function HomeScreen() {
     >
       <View style={styles.headerRow}>
         <View style={styles.headerText}>
-          <Text style={[Typography.largeTitle, { color: text }]}>Components</Text>
-          <Text style={[Typography.subheadline, styles.subtitle, { color: secondary }]}>
+          <Text variant="largeTitle">Components</Text>
+          <Text variant="subheadline" color="textSecondary">
             UI 컴포넌트 카탈로그
           </Text>
         </View>
@@ -73,8 +71,8 @@ export default function HomeScreen() {
       />
 
       <Sheet sheetRef={sheetRef} snapPoints={['30%']}>
-        <Text style={[Typography.headline, { color: text }]}>Bottom Sheet</Text>
-        <Text style={[Typography.body, { color: secondary }]}>Swipe down to dismiss</Text>
+        <Text variant="headline">Bottom Sheet</Text>
+        <Text color="textSecondary">Swipe down to dismiss</Text>
       </Sheet>
 
       <Dialog
@@ -107,9 +105,8 @@ function ComponentsContent({
   show: ReturnType<typeof useToast>['show'];
   setDialogVisible: (v: boolean) => void;
 }) {
-  const text = useThemeColor('text');
-  const secondary = useThemeColor('textSecondary');
   const accent = useThemeColor('accent');
+  const secondary = useThemeColor('textSecondary');
 
   const s1 = useEntrance({ fade: true, slideY: 30, delay: 0 });
   const s2 = useEntrance({ fade: true, slideY: 30, delay: 100 });
@@ -123,45 +120,45 @@ function ComponentsContent({
     <>
       {/* Text */}
       <Animated.View style={[styles.section, s1.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Text</Text>
-        <UIText variant="largeTitle">largeTitle</UIText>
-        <UIText variant="title1">title1</UIText>
-        <UIText variant="title2">title2</UIText>
-        <UIText variant="title3">title3</UIText>
-        <UIText variant="headline">headline</UIText>
-        <UIText variant="body">body (default)</UIText>
-        <UIText variant="callout">callout</UIText>
-        <UIText variant="subheadline" color="textSecondary">
+        <Text variant="headline">Text</Text>
+        <Text variant="largeTitle">largeTitle</Text>
+        <Text variant="title1">title1</Text>
+        <Text variant="title2">title2</Text>
+        <Text variant="title3">title3</Text>
+        <Text variant="headline">headline</Text>
+        <Text variant="body">body (default)</Text>
+        <Text variant="callout">callout</Text>
+        <Text variant="subheadline" color="textSecondary">
           subheadline · secondary
-        </UIText>
-        <UIText variant="footnote" color="textSecondary">
+        </Text>
+        <Text variant="footnote" color="textSecondary">
           footnote · secondary
-        </UIText>
-        <UIText variant="caption1" color="textTertiary">
+        </Text>
+        <Text variant="caption1" color="textTertiary">
           caption1 · tertiary
-        </UIText>
-        <UIText variant="caption2" color="textTertiary">
+        </Text>
+        <Text variant="caption2" color="textTertiary">
           caption2 · tertiary
-        </UIText>
+        </Text>
       </Animated.View>
 
       {/* Card */}
       <Animated.View style={[styles.section, s1.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Card</Text>
+        <Text variant="headline">Card</Text>
         <Card variant="elevated">
-          <Text style={[Typography.body, { color: text }]}>Elevated</Text>
+          <Text>Elevated</Text>
         </Card>
         <Card variant="outlined">
-          <Text style={[Typography.body, { color: text }]}>Outlined</Text>
+          <Text>Outlined</Text>
         </Card>
         <Card variant="filled">
-          <Text style={[Typography.body, { color: text }]}>Filled</Text>
+          <Text>Filled</Text>
         </Card>
       </Animated.View>
 
       {/* Button */}
       <Animated.View style={[styles.section, s1.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Button</Text>
+        <Text variant="headline">Button</Text>
         <View style={styles.row}>
           <Button title="Primary" variant="primary" size="sm" />
           <Button title="Secondary" variant="secondary" size="sm" />
@@ -176,7 +173,7 @@ function ComponentsContent({
 
       {/* Image */}
       <Animated.View style={[styles.section, s2.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Image</Text>
+        <Text variant="headline">Image</Text>
         <Image
           source="https://picsum.photos/seed/taste-kit/400/200"
           radius="lg"
@@ -203,7 +200,7 @@ function ComponentsContent({
 
       {/* TextInput */}
       <Animated.View style={[styles.section, s2.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>TextInput</Text>
+        <Text variant="headline">TextInput</Text>
         <TextInput label="이메일" placeholder="example@mail.com" keyboardType="email-address" />
         <TextInput label="비밀번호" placeholder="8자 이상" secureTextEntry />
         <TextInput label="에러 상태" placeholder="입력하세요" error="필수 항목입니다" />
@@ -211,13 +208,13 @@ function ComponentsContent({
 
       {/* SearchBar */}
       <Animated.View style={[styles.section, s2.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>SearchBar</Text>
+        <Text variant="headline">SearchBar</Text>
         <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
       </Animated.View>
 
       {/* Toggle & ListItem */}
       <Animated.View style={[styles.section, s3.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>ListItem & Toggle</Text>
+        <Text variant="headline">ListItem & Toggle</Text>
         <Card variant="filled" padding={0}>
           <ListItem
             title="알림"
@@ -243,16 +240,16 @@ function ComponentsContent({
 
       {/* Divider */}
       <Animated.View style={[styles.section, s3.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Divider</Text>
-        <Text style={[Typography.body, { color: secondary }]}>기본</Text>
+        <Text variant="headline">Divider</Text>
+        <Text color="textSecondary">기본</Text>
         <Divider />
-        <Text style={[Typography.body, { color: secondary }]}>Inset (56)</Text>
+        <Text color="textSecondary">Inset (56)</Text>
         <Divider inset={56} />
       </Animated.View>
 
       {/* Skeleton */}
       <Animated.View style={[styles.section, s3.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Skeleton</Text>
+        <Text variant="headline">Skeleton</Text>
         <View style={styles.row}>
           <Skeleton circle height={48} />
           <View style={styles.skeletonLines}>
@@ -265,10 +262,10 @@ function ComponentsContent({
 
       {/* Interactions */}
       <Animated.View style={[styles.section, s4.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Interactions</Text>
+        <Text variant="headline">Interactions</Text>
         <AnimatedPressable onPress={openSheet}>
           <Card variant="filled">
-            <Text style={[Typography.body, { color: text }]}>Sheet 열기</Text>
+            <Text>Sheet 열기</Text>
           </Card>
         </AnimatedPressable>
         <View style={styles.row}>
@@ -305,7 +302,7 @@ function ComponentsContent({
 
       {/* Navigation */}
       <Animated.View style={[styles.section, s4.animatedStyle]}>
-        <Text style={[Typography.headline, { color: text }]}>Navigation</Text>
+        <Text variant="headline">Navigation</Text>
         <Button
           title="온보딩 다시 보기"
           variant="secondary"
@@ -328,9 +325,6 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
     gap: Spacing.md,
     paddingBottom: Spacing['2xl'],
-  },
-  subtitle: {
-    marginTop: Spacing.xs,
   },
   section: {
     gap: Spacing.sm,

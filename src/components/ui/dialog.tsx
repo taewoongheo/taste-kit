@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
-import { Colors, Layout, Spacing, Typography } from '@/constants';
-import { Modal, Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native';
+import { Text } from '@/components/ui/text';
+import { Layout, Spacing } from '@/constants';
+import { useThemeColor } from '@/hooks';
+import { Modal, Pressable, StyleSheet, View } from 'react-native';
 
 export interface DialogAction {
   label: string;
@@ -17,19 +19,20 @@ export interface DialogProps {
 }
 
 export function Dialog({ visible, onDismiss, title, message, actions }: DialogProps) {
-  const colorScheme = useColorScheme() ?? 'light';
-  const colors = Colors[colorScheme];
+  const bgElevated = useThemeColor('backgroundElevated');
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onDismiss}>
       <Pressable style={styles.overlay} onPress={onDismiss}>
         <Pressable
-          style={[styles.dialog, { backgroundColor: colors.backgroundElevated }]}
+          style={[styles.dialog, { backgroundColor: bgElevated }]}
           onPress={(e) => e.stopPropagation()}
         >
-          <Text style={[Typography.title3, styles.title, { color: colors.text }]}>{title}</Text>
+          <Text variant="title3" align="center">
+            {title}
+          </Text>
           {message && (
-            <Text style={[Typography.body, styles.message, { color: colors.textSecondary }]}>
+            <Text variant="body" color="textSecondary" align="center">
               {message}
             </Text>
           )}
@@ -64,19 +67,12 @@ const styles = StyleSheet.create({
     maxWidth: 320,
     borderRadius: Layout.radiusLg,
     padding: Spacing.lg,
+    gap: Spacing.xs,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
     shadowRadius: 16,
     elevation: 8,
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: Spacing.xs,
-  },
-  message: {
-    textAlign: 'center',
-    marginBottom: Spacing.md,
   },
   actions: {
     gap: Spacing.sm,
