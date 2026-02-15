@@ -8,3 +8,4 @@ export { Sheet, type SheetProps } from './sheet';
 export { Skeleton, type SkeletonProps } from './skeleton';
 export { TextInput, type TextInputProps } from './text-input';
 export { ToastProvider, useToast, type ToastConfig, type ToastType } from './toast';
+export { Toggle, type ToggleProps } from './toggle';
