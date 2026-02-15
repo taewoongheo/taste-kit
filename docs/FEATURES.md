@@ -153,7 +153,62 @@ const sheetRef = useRef<BottomSheet>(null);
 
 ---
 
-## 5. State Management (Zustand)
+## 5. Haptic Utility
+
+**파일**: `src/lib/haptics.ts`
+
+expo-haptics 시맨틱 래퍼. `Haptic.tap()` 형태로 사용.
+
+| 함수 | 용도 |
+|------|------|
+| `tap()` | 버튼, 토글, 일반 터치 (Light) |
+| `impact()` | 스냅, 카드 드롭 (Medium) |
+| `heavyImpact()` | 삭제 확인, 중요 액션 (Heavy) |
+| `success()` | 완료, 저장 |
+| `warning()` | 경고 |
+| `error()` | 에러 |
+| `selection()` | 피커, 세그먼트 전환 |
+
+```ts
+import { Haptic } from '@/lib';
+
+Haptic.tap();
+Haptic.success();
+```
+
+---
+
+## 6. Onboarding Funnel
+
+**파일**: `src/components/onboarding/`
+
+재사용 가능한 온보딩 퍼널. 수평 스크롤 페이징, 애니메이션 인디케이터, 스킵/완료 지원.
+
+| Props | Type | 설명 |
+|-------|------|------|
+| `steps` | `OnboardingStep[]` | 스텝 배열 (title, description, content) |
+| `onComplete` | `() => void` | 완료 콜백 |
+| `onSkip` | `() => void` | 스킵 콜백 (미제공 시 숨김) |
+| `completeLabel` | `string` | 마지막 버튼 텍스트 (default: '시작하기') |
+
+```tsx
+import { OnboardingFunnel } from '@/components/onboarding';
+
+<OnboardingFunnel
+  steps={[
+    { title: '환영합니다', description: '설명...' },
+    { title: '기능 소개', description: '설명...', content: <MyImage /> },
+  ]}
+  onComplete={() => setOnboarded(true)}
+  onSkip={() => setOnboarded(true)}
+/>
+```
+
+`app/_layout.tsx`에서 `useAppStore`의 `isOnboarded` 상태에 따라 자동 리다이렉트.
+
+---
+
+## 7. State Management (Zustand)
 
 **파일**: `src/stores/app-store.ts`
 
@@ -199,7 +254,7 @@ export const useMyStore = create<MyState>()(
 
 ---
 
-## 6. Local Database (expo-sqlite)
+## 8. Local Database (expo-sqlite)
 
 **파일**: `src/lib/database.ts`
 
@@ -241,7 +296,7 @@ function MyComponent() {
 
 ---
 
-## 7. i18n (다국어)
+## 9. i18n (다국어)
 
 **파일**: `src/lib/i18n/`
 
@@ -265,7 +320,7 @@ function MyComponent() {
 
 ---
 
-## 8. Providers
+## 10. Providers
 
 **파일**: `src/providers/app-providers.tsx`
 
@@ -281,7 +336,7 @@ GestureHandlerRootView
 
 ---
 
-## 9. Navigation (Expo Router)
+## 11. Navigation (Expo Router)
 
 **디렉토리**: `app/`
 
@@ -291,11 +346,22 @@ GestureHandlerRootView
 | `app/(tabs)/_layout.tsx` | Bottom tabs |
 | `app/(tabs)/index.tsx` | Home 탭 |
 | `app/(tabs)/explore.tsx` | Explore 탭 |
+| `app/onboarding.tsx` | 온보딩 화면 |
 | `app/modal.tsx` | Modal 화면 |
 
 ---
 
-## 10. 개발 도구
+## 12. Demo Screens
+
+### Home 탭 (Components)
+UI 컴포넌트 카탈로그. Card variant, Button variant/size/state, AnimatedPressable, Sheet, Haptic 피드백 데모.
+
+### Explore 탭 (Tokens)
+디자인 토큰 카탈로그. Spring/Timing 프리셋 값, Spacing 시각화.
+
+---
+
+## 13. 개발 도구
 
 | 도구 | 설명 |
 |------|------|
@@ -310,10 +376,12 @@ GestureHandlerRootView
 
 ```
 src/
-├── components/ui/     # UI 컴포넌트 (AnimatedPressable, Button, Card, Sheet)
+├── components/
+│   ├── onboarding/    # 온보딩 퍼널 (OnboardingFunnel, OnboardingIndicator)
+│   └── ui/            # UI 컴포넌트 (AnimatedPressable, Button, Card, Sheet)
 ├── constants/         # 디자인 토큰, 애니메이션 프리셋
 ├── hooks/             # 커스텀 hooks (useScalePress, useEntrance, useColorScheme, useThemeColor)
-├── lib/               # 유틸리티 (database, i18n)
+├── lib/               # 유틸리티 (database, haptics, i18n)
 ├── providers/         # AppProviders
 ├── stores/            # Zustand 스토어
 └── types/             # 타입 선언
