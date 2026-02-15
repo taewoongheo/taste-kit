@@ -20,3 +20,4 @@ export {
   type UseScalePressOptions,
   type UseScalePressReturn,
 } from './use-scale-press';
+export { useShake, type UseShakeOptions, type UseShakeReturn } from './use-shake';
