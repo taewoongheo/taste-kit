@@ -35,8 +35,8 @@ export default function ExploreScreen() {
     >
       <View style={styles.headerRow}>
         <View style={styles.headerText}>
-          <Text variant="largeTitle">Tokens</Text>
-          <Text variant="subheadline" color="textSecondary">
+          <Text variant="hero">Tokens</Text>
+          <Text variant="label" color="textSecondary">
             디자인 토큰 & 애니메이션 프리셋
           </Text>
         </View>
@@ -65,13 +65,13 @@ function TokensContent() {
     <>
       {/* Spring Presets */}
       <Animated.View style={[styles.section, s1.animatedStyle]}>
-        <Text variant="headline">Spring Presets</Text>
+        <Text variant="subtitle">Spring Presets</Text>
         {Object.entries(Springs).map(([name, config]) => (
           <Card key={name} variant="filled">
-            <Text variant="headline" color="accent">
+            <Text variant="subtitle" color="accent">
               {name}
             </Text>
-            <Text variant="footnote" color="textSecondary">
+            <Text variant="caption" color="textSecondary">
               damping: {config.damping} · stiffness: {config.stiffness}
             </Text>
           </Card>
@@ -80,13 +80,13 @@ function TokensContent() {
 
       {/* Timing Presets */}
       <Animated.View style={[styles.section, s2.animatedStyle]}>
-        <Text variant="headline">Timing Presets</Text>
+        <Text variant="subtitle">Timing Presets</Text>
         {Object.entries(Timings).map(([name, config]) => (
           <Card key={name} variant="filled">
-            <Text variant="headline" color="accent">
+            <Text variant="subtitle" color="accent">
               {name}
             </Text>
-            <Text variant="footnote" color="textSecondary">
+            <Text variant="caption" color="textSecondary">
               duration: {config.duration}ms
             </Text>
           </Card>
@@ -95,7 +95,7 @@ function TokensContent() {
 
       {/* Theme Mode */}
       <Animated.View style={[styles.section, s2.animatedStyle]}>
-        <Text variant="headline">Theme</Text>
+        <Text variant="subtitle">Theme</Text>
         <View style={styles.themeRow}>
           {themeModes.map(({ mode, label }) => (
             <Button
@@ -111,7 +111,7 @@ function TokensContent() {
 
       {/* Spacing */}
       <Animated.View style={[styles.section, s3.animatedStyle]}>
-        <Text variant="headline">Spacing</Text>
+        <Text variant="subtitle">Spacing</Text>
         <View style={styles.spacingRow}>
           {(['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const).map((key) => (
             <View key={key} style={styles.spacingItem}>
@@ -121,10 +121,10 @@ function TokensContent() {
                   { width: Spacing[key], height: Spacing[key], backgroundColor: accent },
                 ]}
               />
-              <Text variant="caption1" color="textSecondary">
+              <Text variant="caption" color="textSecondary">
                 {key}
               </Text>
-              <Text variant="caption2" color="textSecondary">
+              <Text variant="caption" color="textSecondary">
                 {Spacing[key]}
               </Text>
             </View>

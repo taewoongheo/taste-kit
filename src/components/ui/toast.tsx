@@ -86,7 +86,7 @@ function ToastItem({ toast }: { toast: ActiveToast }) {
         { backgroundColor: colors.backgroundElevated, borderLeftColor: accentColor },
       ]}
     >
-      <Text variant="subheadline">{toast.message}</Text>
+      <Text variant="label">{toast.message}</Text>
     </Animated.View>
   );
 }

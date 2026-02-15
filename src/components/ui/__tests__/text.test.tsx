@@ -12,9 +12,9 @@ describe('Text', () => {
     expect(screen.getByText('Body text')).toBeTruthy();
   });
 
-  it('renders with headline variant', () => {
-    render(<Text variant="headline">Headline</Text>);
-    expect(screen.getByText('Headline')).toBeTruthy();
+  it('renders with subtitle variant', () => {
+    render(<Text variant="subtitle">Subtitle</Text>);
+    expect(screen.getByText('Subtitle')).toBeTruthy();
   });
 
   it('renders with color token', () => {

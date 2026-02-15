@@ -40,7 +40,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
       return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-          <Text style={[Typography.title2, styles.title, { color: colors.text }]}>
+          <Text style={[Typography.title, styles.title, { color: colors.text }]}>
             문제가 발생했습니다
           </Text>
           <Text style={[Typography.body, styles.message, { color: colors.textSecondary }]}>

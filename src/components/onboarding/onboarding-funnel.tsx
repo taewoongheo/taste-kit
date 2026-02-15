@@ -94,7 +94,7 @@ export function OnboardingFunnel({
         {steps.map((step) => (
           <View key={step.title} style={[styles.step, { width }]}>
             {step.content && <View style={styles.content}>{step.content}</View>}
-            <Text variant="title1" align="center">
+            <Text variant="title" align="center">
               {step.title}
             </Text>
             <Text variant="body" color="textSecondary" align="center">

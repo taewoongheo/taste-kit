@@ -28,7 +28,7 @@ export function Dialog({ visible, onDismiss, title, message, actions }: DialogPr
           style={[styles.dialog, { backgroundColor: bgElevated }]}
           onPress={(e) => e.stopPropagation()}
         >
-          <Text variant="title3" align="center">
+          <Text variant="title" align="center">
             {title}
           </Text>
           {message && (

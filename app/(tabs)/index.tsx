@@ -51,8 +51,8 @@ export default function HomeScreen() {
     >
       <View style={styles.headerRow}>
         <View style={styles.headerText}>
-          <Text variant="largeTitle">Components</Text>
-          <Text variant="subheadline" color="textSecondary">
+          <Text variant="hero">Components</Text>
+          <Text variant="label" color="textSecondary">
             UI 컴포넌트 카탈로그
           </Text>
         </View>
@@ -71,7 +71,7 @@ export default function HomeScreen() {
       />
 
       <Sheet sheetRef={sheetRef} snapPoints={['30%']}>
-        <Text variant="headline">Bottom Sheet</Text>
+        <Text variant="subtitle">Bottom Sheet</Text>
         <Text color="textSecondary">Swipe down to dismiss</Text>
       </Sheet>
 
@@ -120,31 +120,22 @@ function ComponentsContent({
     <>
       {/* Text */}
       <Animated.View style={[styles.section, s1.animatedStyle]}>
-        <Text variant="headline">Text</Text>
-        <Text variant="largeTitle">largeTitle</Text>
-        <Text variant="title1">title1</Text>
-        <Text variant="title2">title2</Text>
-        <Text variant="title3">title3</Text>
-        <Text variant="headline">headline</Text>
+        <Text variant="subtitle">Text</Text>
+        <Text variant="hero">hero</Text>
+        <Text variant="title">title</Text>
+        <Text variant="subtitle">subtitle</Text>
         <Text variant="body">body (default)</Text>
-        <Text variant="callout">callout</Text>
-        <Text variant="subheadline" color="textSecondary">
-          subheadline · secondary
+        <Text variant="label" color="textSecondary">
+          label · secondary
         </Text>
-        <Text variant="footnote" color="textSecondary">
-          footnote · secondary
-        </Text>
-        <Text variant="caption1" color="textTertiary">
-          caption1 · tertiary
-        </Text>
-        <Text variant="caption2" color="textTertiary">
-          caption2 · tertiary
+        <Text variant="caption" color="textSecondary">
+          caption · secondary
         </Text>
       </Animated.View>
 
       {/* Card */}
       <Animated.View style={[styles.section, s1.animatedStyle]}>
-        <Text variant="headline">Card</Text>
+        <Text variant="subtitle">Card</Text>
         <Card variant="elevated">
           <Text>Elevated</Text>
         </Card>
@@ -158,7 +149,7 @@ function ComponentsContent({
 
       {/* Button */}
       <Animated.View style={[styles.section, s1.animatedStyle]}>
-        <Text variant="headline">Button</Text>
+        <Text variant="subtitle">Button</Text>
         <View style={styles.row}>
           <Button title="Primary" variant="primary" size="sm" />
           <Button title="Secondary" variant="secondary" size="sm" />
@@ -173,7 +164,7 @@ function ComponentsContent({
 
       {/* Image */}
       <Animated.View style={[styles.section, s2.animatedStyle]}>
-        <Text variant="headline">Image</Text>
+        <Text variant="subtitle">Image</Text>
         <Image
           source="https://picsum.photos/seed/taste-kit/400/200"
           radius="lg"
@@ -200,7 +191,7 @@ function ComponentsContent({
 
       {/* TextInput */}
       <Animated.View style={[styles.section, s2.animatedStyle]}>
-        <Text variant="headline">TextInput</Text>
+        <Text variant="subtitle">TextInput</Text>
         <TextInput label="이메일" placeholder="example@mail.com" keyboardType="email-address" />
         <TextInput label="비밀번호" placeholder="8자 이상" secureTextEntry />
         <TextInput label="에러 상태" placeholder="입력하세요" error="필수 항목입니다" />
@@ -208,13 +199,13 @@ function ComponentsContent({
 
       {/* SearchBar */}
       <Animated.View style={[styles.section, s2.animatedStyle]}>
-        <Text variant="headline">SearchBar</Text>
+        <Text variant="subtitle">SearchBar</Text>
         <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
       </Animated.View>
 
       {/* Toggle & ListItem */}
       <Animated.View style={[styles.section, s3.animatedStyle]}>
-        <Text variant="headline">ListItem & Toggle</Text>
+        <Text variant="subtitle">ListItem & Toggle</Text>
         <Card variant="filled" padding={0}>
           <ListItem
             title="알림"
@@ -240,7 +231,7 @@ function ComponentsContent({
 
       {/* Divider */}
       <Animated.View style={[styles.section, s3.animatedStyle]}>
-        <Text variant="headline">Divider</Text>
+        <Text variant="subtitle">Divider</Text>
         <Text color="textSecondary">기본</Text>
         <Divider />
         <Text color="textSecondary">Inset (56)</Text>
@@ -249,7 +240,7 @@ function ComponentsContent({
 
       {/* Skeleton */}
       <Animated.View style={[styles.section, s3.animatedStyle]}>
-        <Text variant="headline">Skeleton</Text>
+        <Text variant="subtitle">Skeleton</Text>
         <View style={styles.row}>
           <Skeleton circle height={48} />
           <View style={styles.skeletonLines}>
@@ -262,7 +253,7 @@ function ComponentsContent({
 
       {/* Interactions */}
       <Animated.View style={[styles.section, s4.animatedStyle]}>
-        <Text variant="headline">Interactions</Text>
+        <Text variant="subtitle">Interactions</Text>
         <AnimatedPressable onPress={openSheet}>
           <Card variant="filled">
             <Text>Sheet 열기</Text>
@@ -302,7 +293,7 @@ function ComponentsContent({
 
       {/* Navigation */}
       <Animated.View style={[styles.section, s4.animatedStyle]}>
-        <Text variant="headline">Navigation</Text>
+        <Text variant="subtitle">Navigation</Text>
         <Button
           title="온보딩 다시 보기"
           variant="secondary"

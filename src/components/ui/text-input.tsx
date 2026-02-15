@@ -28,7 +28,7 @@ export function TextInput({ label, error, disabled = false, ...inputProps }: Tex
   return (
     <View style={styles.container}>
       {label && (
-        <Text variant="subheadline" color="textSecondary">
+        <Text variant="label" color="textSecondary">
           {label}
         </Text>
       )}
@@ -55,7 +55,7 @@ export function TextInput({ label, error, disabled = false, ...inputProps }: Tex
         ]}
       />
       {error && (
-        <Text variant="caption1" color="destructive">
+        <Text variant="caption" color="destructive">
           {error}
         </Text>
       )}

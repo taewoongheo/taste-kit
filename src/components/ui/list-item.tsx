@@ -49,7 +49,7 @@ export function ListItem({
           {title}
         </Text>
         {subtitle && (
-          <Text variant="footnote" color="textSecondary" numberOfLines={1}>
+          <Text variant="caption" color="textSecondary" numberOfLines={1}>
             {subtitle}
           </Text>
         )}

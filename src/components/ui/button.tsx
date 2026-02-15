@@ -30,9 +30,9 @@ export interface ButtonProps {
 }
 
 const sizeConfig = {
-  sm: { height: 34, paddingHorizontal: Spacing.sm, typography: Typography.subheadline },
+  sm: { height: 34, paddingHorizontal: Spacing.sm, typography: Typography.label },
   md: { height: 44, paddingHorizontal: Spacing.md, typography: Typography.body },
-  lg: { height: 54, paddingHorizontal: Spacing.lg, typography: Typography.headline },
+  lg: { height: 54, paddingHorizontal: Spacing.lg, typography: Typography.subtitle },
 } as const;
 
 export function Button({
