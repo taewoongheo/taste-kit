@@ -99,13 +99,13 @@ feature-interaction 맵           구현 계획 (UI 패턴 포함)
 
 ```
 /plan → /build → /verify → /checkpoint
-        ↑
-  /design (선택적, 복잡한 L2 화면만)
+         ↑
+   /design (선택적, 복잡한 L2 화면만)
 ```
 
 | Command | 용도 | 사용 시점 |
 |---------|------|----------|
-| `/plan` | 기획 + UI 패턴 결정 (메타포 앱은 ideator → planner) | 새 기능/화면 시작 시 |
+| `/plan` | 아키텍처 + UI 패턴 + 구현 페이즈 (ideate/ 출력 참조) | ideate/ 확정 후 또는 일반 기능 시작 시 |
 | `/design` | 복잡한 화면 레이아웃 심화 (선택적) | L2-Core 등 복잡한 화면만 |
 | `/build` | 기능 구현 | 코드 작성 시 |
 | `/verify` | tsc + lint 빠른 검증 | 코드 변경 후 수시로 |
@@ -203,19 +203,24 @@ feature-interaction 맵           구현 계획 (UI 패턴 포함)
 
 ## 워크플로우 예시
 
-### 메타포 앱 — 아이디어 카드에서 시작
+### 메타포 앱 — 배치 파이프라인 (추천)
 
 ```
-/plan --idea [카드]  → ideator + planner (아키텍처 + UI 패턴)
-/interaction-spec    → L2-Core 화면 우선
-/build               → 구현
-/verify → /checkpoint
+/pipeline external [domain]  → 생성 → [후보 선택] → Phase 3 + store + ideate 자동
+→ ideate/ 리뷰              → 실제 프로젝트에서 /plan → /build
+```
+
+### 메타포 앱 — 수동 (개별 카드)
+
+```
+/ideate [카드]       → Feature-Interaction Map → 유저 리뷰/수정
+→ 실제 프로젝트에서 /plan → /interaction-spec → /build
 ```
 
 ### 프리랜스/일반 기능
 
 ```
-/plan [feature]  → planner만 (ideator 스킵)
+/plan [feature]  → ideator 스킵, planner만
 /build
 /verify → /checkpoint
 ```
