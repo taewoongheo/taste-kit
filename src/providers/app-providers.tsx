@@ -1,3 +1,4 @@
+import { ToastProvider } from '@/components/ui';
 import { migrate } from '@/lib';
 import { SQLiteProvider } from 'expo-sqlite';
 import type { ReactNode } from 'react';
@@ -16,7 +17,7 @@ export function AppProviders({ children }: AppProvidersProps) {
   return (
     <GestureHandlerRootView style={styles.root}>
       <SQLiteProvider databaseName="taste-kit.db" onInit={migrate}>
-        {children}
+        <ToastProvider>{children}</ToastProvider>
       </SQLiteProvider>
     </GestureHandlerRootView>
   );
