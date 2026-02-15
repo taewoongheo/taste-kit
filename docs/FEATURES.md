@@ -151,6 +151,113 @@ const sheetRef = useRef<BottomSheet>(null);
 </Sheet>
 ```
 
+### Dialog
+
+**파일**: `src/components/ui/dialog.tsx`
+
+확인/취소 모달 다이얼로그. title, message, actions 배열.
+
+```tsx
+<Dialog
+  visible={showDialog}
+  onDismiss={() => setShowDialog(false)}
+  title="삭제하시겠습니까?"
+  message="이 작업은 되돌릴 수 없습니다."
+  actions={[
+    { label: '취소', variant: 'ghost', onPress: () => setShowDialog(false) },
+    { label: '삭제', variant: 'destructive', onPress: handleDelete },
+  ]}
+/>
+```
+
+### Divider
+
+**파일**: `src/components/ui/divider.tsx`
+
+리스트 구분선. `inset` prop으로 왼쪽 여백 조절.
+
+```tsx
+<Divider />
+<Divider inset={56} />
+```
+
+### ErrorBoundary
+
+**파일**: `src/components/ui/error-boundary.tsx`
+
+React error boundary. 크래시 시 fallback UI + 재시도 버튼. `AppProviders`에 내장.
+
+```tsx
+<ErrorBoundary>
+  <MyComponent />
+</ErrorBoundary>
+```
+
+### ListItem
+
+**파일**: `src/components/ui/list-item.tsx`
+
+icon + title + subtitle + trailing accessory. `onPress` 시 AnimatedPressable 자동 래핑.
+
+```tsx
+<ListItem title="설정" subtitle="앱 설정" trailing={<Ionicons name="chevron-forward" />} onPress={handlePress} />
+<ListItem title="알림" trailing={<Toggle value={enabled} onValueChange={setEnabled} />} />
+```
+
+### SearchBar
+
+**파일**: `src/components/ui/search-bar.tsx`
+
+검색 입력 바. search 아이콘, clear 버튼.
+
+```tsx
+<SearchBar value={query} onChangeText={setQuery} placeholder="검색" />
+```
+
+### Skeleton
+
+**파일**: `src/components/ui/skeleton.tsx`
+
+로딩 스켈레톤. pulse 애니메이션. width, height, radius, circle 지원.
+
+```tsx
+<Skeleton width={200} height={20} />
+<Skeleton circle height={48} />
+```
+
+### TextInput
+
+**파일**: `src/components/ui/text-input.tsx`
+
+스타일드 텍스트 입력. label, error 상태, focus 보더 색상.
+
+```tsx
+<TextInput label="이메일" placeholder="example@mail.com" />
+<TextInput label="비밀번호" error="8자 이상 입력하세요" secureTextEntry />
+```
+
+### Toast
+
+**파일**: `src/components/ui/toast.tsx`
+
+slide-in 토스트 알림. success/error/warning/info 타입. `AppProviders`에 내장.
+
+```tsx
+const { show } = useToast();
+show({ message: '저장되었습니다', type: 'success' });
+show({ message: '오류가 발생했습니다', type: 'error', duration: 5000 });
+```
+
+### Toggle
+
+**파일**: `src/components/ui/toggle.tsx`
+
+애니메이션 토글 스위치. spring thumb 이동 + 색상 전환 + haptic.
+
+```tsx
+<Toggle value={enabled} onValueChange={setEnabled} />
+```
+
 ---
 
 ## 5. Haptic Utility
@@ -328,9 +435,13 @@ function MyComponent() {
 
 ```
 GestureHandlerRootView
-  └─ SQLiteProvider (taste-kit.db, onInit: migrate)
-       └─ children
+  └─ ErrorBoundary
+       └─ SQLiteProvider (taste-kit.db, onInit: migrate)
+            └─ ToastProvider
+                 └─ children
 ```
+
+**Splash Screen**: `app/_layout.tsx`에서 `SplashScreen.preventAutoHideAsync()` → 레이아웃 마운트 시 `hideAsync()` 호출.
 
 **provider 추가 시**: `AppProviders` 내부에 중첩.
 
@@ -378,7 +489,7 @@ UI 컴포넌트 카탈로그. Card variant, Button variant/size/state, AnimatedP
 src/
 ├── components/
 │   ├── onboarding/    # 온보딩 퍼널 (OnboardingFunnel, OnboardingIndicator)
-│   └── ui/            # UI 컴포넌트 (AnimatedPressable, Button, Card, Sheet)
+│   └── ui/            # UI 컴포넌트 (14개: AnimatedPressable, Button, Card, Dialog, Divider, ErrorBoundary, ListItem, SearchBar, Sheet, Skeleton, TextInput, Toast, Toggle)
 ├── constants/         # 디자인 토큰, 애니메이션 프리셋
 ├── hooks/             # 커스텀 hooks (useScalePress, useEntrance, useColorScheme, useThemeColor)
 ├── lib/               # 유틸리티 (database, haptics, i18n)
