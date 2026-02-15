@@ -3,6 +3,7 @@ export { Button, type ButtonProps, type ButtonVariant, type ButtonSize } from '.
 export { ErrorBoundary } from './error-boundary';
 export { Card, type CardProps, type CardVariant } from './card';
 export { Dialog, type DialogProps, type DialogAction } from './dialog';
+export { Divider, type DividerProps } from './divider';
 export { ListItem, type ListItemProps } from './list-item';
 export { Sheet, type SheetProps } from './sheet';
 export { Skeleton, type SkeletonProps } from './skeleton';
