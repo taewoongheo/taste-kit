@@ -2,7 +2,9 @@ import { AnimatedPressable, Button, Card, Sheet } from '@/components/ui';
 import { Spacing, Typography } from '@/constants';
 import { useEntrance, useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
+import { useAppStore } from '@/stores';
 import type BottomSheet from '@gorhom/bottom-sheet';
+import { router } from 'expo-router';
 import { useCallback, useRef } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -85,6 +87,20 @@ export default function HomeScreen() {
             <Text style={[Typography.body, { color: text }]}>Haptic: error</Text>
           </Card>
         </AnimatedPressable>
+      </Animated.View>
+
+      {/* Navigation */}
+      <Animated.View style={[styles.section, interactionEntrance.animatedStyle]}>
+        <Text style={[Typography.headline, { color: text }]}>Navigation</Text>
+        <Button
+          title="온보딩 다시 보기"
+          variant="secondary"
+          fullWidth
+          onPress={() => {
+            useAppStore.getState().setOnboarded(false);
+            router.replace('/onboarding');
+          }}
+        />
       </Animated.View>
 
       <Sheet sheetRef={sheetRef} snapPoints={['30%']}>
