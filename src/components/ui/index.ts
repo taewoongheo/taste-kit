@@ -5,6 +5,7 @@ export { Card, type CardProps, type CardVariant } from './card';
 export { Dialog, type DialogProps, type DialogAction } from './dialog';
 export { Divider, type DividerProps } from './divider';
 export { ListItem, type ListItemProps } from './list-item';
+export { SearchBar, type SearchBarProps } from './search-bar';
 export { Sheet, type SheetProps } from './sheet';
 export { Skeleton, type SkeletonProps } from './skeleton';
 export { TextInput, type TextInputProps } from './text-input';
