@@ -1,5 +1,6 @@
 import '@/lib/i18n';
 import { useColorScheme } from '@/hooks';
+import { useLoadFonts } from '@/lib';
 import { AppProviders } from '@/providers';
 import { useAppStore } from '@/stores';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
@@ -18,10 +19,13 @@ export const unstable_settings = {
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const isOnboarded = useAppStore((s) => s.isOnboarded);
+  const { loaded: fontsLoaded } = useLoadFonts();
 
   useEffect(() => {
-    SplashScreen.hideAsync();
-  }, []);
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
   return (
     <AppProviders>
