@@ -1,3 +1,4 @@
+export { AnimatedNumber, type AnimatedNumberProps } from './animated-number';
 export { AnimatedPressable, type AnimatedPressableProps } from './animated-pressable';
 export { Button, type ButtonProps, type ButtonVariant, type ButtonSize } from './button';
 export { ErrorBoundary } from './error-boundary';
