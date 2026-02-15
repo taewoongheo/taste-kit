@@ -10,7 +10,7 @@ jest.mock('react-native-gesture-handler', () => {
   };
 });
 
-function ThrowingChild() {
+function ThrowingChild(): React.ReactNode {
   throw new Error('Test error');
 }
 

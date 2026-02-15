@@ -1,16 +1,25 @@
-import { Card } from '@/components/ui';
+import { Button, Card } from '@/components/ui';
 import { Springs, Timings } from '@/constants/animations';
 import { Spacing, Typography } from '@/constants/design-tokens';
 import { useEntrance, useThemeColor } from '@/hooks';
+import { type ThemeMode, useAppStore } from '@/stores';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const themeModes: { mode: ThemeMode; label: string }[] = [
+  { mode: 'system', label: 'System' },
+  { mode: 'light', label: 'Light' },
+  { mode: 'dark', label: 'Dark' },
+];
 
 export default function ExploreScreen() {
   const bg = useThemeColor('background');
   const text = useThemeColor('text');
   const secondary = useThemeColor('textSecondary');
   const accent = useThemeColor('accent');
+  const themeMode = useAppStore((s) => s.themeMode);
+  const setThemeMode = useAppStore((s) => s.setThemeMode);
 
   const { top } = useSafeAreaInsets();
   const headerEntrance = useEntrance({ fade: true, slideY: 20 });
@@ -53,6 +62,22 @@ export default function ExploreScreen() {
             </Text>
           </Card>
         ))}
+      </Animated.View>
+
+      {/* Theme Mode */}
+      <Animated.View style={[styles.section, timingsEntrance.animatedStyle]}>
+        <Text style={[Typography.headline, { color: text }]}>Theme</Text>
+        <View style={styles.themeRow}>
+          {themeModes.map(({ mode, label }) => (
+            <Button
+              key={mode}
+              title={label}
+              variant={themeMode === mode ? 'primary' : 'secondary'}
+              size="sm"
+              onPress={() => setThemeMode(mode)}
+            />
+          ))}
+        </View>
       </Animated.View>
 
       {/* Spacing */}
@@ -104,5 +129,9 @@ const styles = StyleSheet.create({
   },
   spacingBox: {
     borderRadius: 4,
+  },
+  themeRow: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
   },
 });

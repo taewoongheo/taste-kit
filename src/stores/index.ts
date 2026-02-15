@@ -1,1 +1,1 @@
-export { useAppStore } from './app-store';
+export { useAppStore, type ThemeMode } from './app-store';
