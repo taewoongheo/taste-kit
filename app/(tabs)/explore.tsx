@@ -1,23 +1,107 @@
-import { Spacing, Typography } from '@/constants';
-import { useThemeColor } from '@/hooks';
-import { StyleSheet, Text, View } from 'react-native';
+import { Card } from '@/components/ui';
+import { Springs, Timings } from '@/constants/animations';
+import { Spacing, Typography } from '@/constants/design-tokens';
+import { useEntrance, useThemeColor } from '@/hooks';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 export default function ExploreScreen() {
-  const backgroundColor = useThemeColor('background');
-  const textColor = useThemeColor('text');
+  const bg = useThemeColor('background');
+  const text = useThemeColor('text');
+  const secondary = useThemeColor('textSecondary');
+  const accent = useThemeColor('accent');
+
+  const headerEntrance = useEntrance({ fade: true, slideY: 20 });
+  const springsEntrance = useEntrance({ fade: true, slideY: 30, delay: 100 });
+  const timingsEntrance = useEntrance({ fade: true, slideY: 30, delay: 200 });
 
   return (
-    <View style={[styles.container, { backgroundColor }]}>
-      <Text style={[Typography.body, { color: textColor }]}>Explore</Text>
-    </View>
+    <ScrollView
+      style={[styles.scroll, { backgroundColor: bg }]}
+      contentContainerStyle={styles.content}
+    >
+      <Animated.View style={headerEntrance.animatedStyle}>
+        <Text style={[Typography.largeTitle, { color: text }]}>Tokens</Text>
+        <Text style={[Typography.subheadline, styles.subtitle, { color: secondary }]}>
+          디자인 토큰 & 애니메이션 프리셋
+        </Text>
+      </Animated.View>
+
+      {/* Spring Presets */}
+      <Animated.View style={[styles.section, springsEntrance.animatedStyle]}>
+        <Text style={[Typography.headline, { color: text }]}>Spring Presets</Text>
+        {Object.entries(Springs).map(([name, config]) => (
+          <Card key={name} variant="filled">
+            <Text style={[Typography.headline, { color: accent }]}>{name}</Text>
+            <Text style={[Typography.footnote, { color: secondary }]}>
+              damping: {config.damping} · stiffness: {config.stiffness}
+            </Text>
+          </Card>
+        ))}
+      </Animated.View>
+
+      {/* Timing Presets */}
+      <Animated.View style={[styles.section, timingsEntrance.animatedStyle]}>
+        <Text style={[Typography.headline, { color: text }]}>Timing Presets</Text>
+        {Object.entries(Timings).map(([name, config]) => (
+          <Card key={name} variant="filled">
+            <Text style={[Typography.headline, { color: accent }]}>{name}</Text>
+            <Text style={[Typography.footnote, { color: secondary }]}>
+              duration: {config.duration}ms
+            </Text>
+          </Card>
+        ))}
+      </Animated.View>
+
+      {/* Spacing */}
+      <Animated.View style={[styles.section, timingsEntrance.animatedStyle]}>
+        <Text style={[Typography.headline, { color: text }]}>Spacing</Text>
+        <View style={styles.spacingRow}>
+          {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((key) => (
+            <View key={key} style={styles.spacingItem}>
+              <View
+                style={[
+                  styles.spacingBox,
+                  { width: Spacing[key], height: Spacing[key], backgroundColor: accent },
+                ]}
+              />
+              <Text style={[Typography.caption1, { color: secondary }]}>{key}</Text>
+              <Text style={[Typography.caption2, { color: secondary }]}>{Spacing[key]}</Text>
+            </View>
+          ))}
+        </View>
+      </Animated.View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scroll: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  content: {
     padding: Spacing.md,
+    paddingTop: Spacing.xl * 2,
+    gap: Spacing.md,
+    paddingBottom: Spacing.xl * 2,
+  },
+  subtitle: {
+    marginTop: Spacing.xs,
+  },
+  section: {
+    gap: Spacing.sm,
+    marginTop: Spacing.md,
+  },
+  spacingRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    gap: Spacing.md,
+  },
+  spacingItem: {
+    alignItems: 'center',
+    gap: Spacing.xs,
+  },
+  spacingBox: {
+    borderRadius: 4,
   },
 });
