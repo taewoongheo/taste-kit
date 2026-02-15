@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
   },
   icon: {
-    marginRight: Spacing.sm + 4,
+    marginRight: Spacing.sm,
   },
   body: {
     flex: 1,

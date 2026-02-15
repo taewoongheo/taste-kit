@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
   content: {
     padding: Spacing.md,
     gap: Spacing.md,
-    paddingBottom: Spacing.xl * 2,
+    paddingBottom: Spacing['2xl'],
   },
   subtitle: {
     marginTop: Spacing.xs,

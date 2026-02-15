@@ -113,7 +113,7 @@ function TokensContent() {
       <Animated.View style={[styles.section, s3.animatedStyle]}>
         <Text style={[Typography.headline, { color: text }]}>Spacing</Text>
         <View style={styles.spacingRow}>
-          {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((key) => (
+          {(['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const).map((key) => (
             <View key={key} style={styles.spacingItem}>
               <View
                 style={[
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   content: {
     padding: Spacing.md,
     gap: Spacing.md,
-    paddingBottom: Spacing.xl * 2,
+    paddingBottom: Spacing['2xl'],
   },
   subtitle: {
     marginTop: Spacing.xs,

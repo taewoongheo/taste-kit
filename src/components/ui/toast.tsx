@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     zIndex: 9999,
   },
   toast: {
-    paddingVertical: Spacing.sm + 2,
+    paddingVertical: Spacing.sm,
     paddingHorizontal: Spacing.md,
     borderRadius: Layout.radiusMd,
     borderLeftWidth: 4,

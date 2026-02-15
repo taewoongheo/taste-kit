@@ -53,19 +53,21 @@ export const Colors = {
 
 export type ColorTokens = (typeof Colors)['light'] | (typeof Colors)['dark'];
 
-// ─── Spacing (8pt grid) ──────────────────────────────────
+// ─── Spacing ────────────────────────────────────────────
 
 export const Spacing = {
-  /** 4pt — tight elements */
-  xs: 4,
-  /** 8pt — related elements */
-  sm: 8,
+  /** 8pt — related elements, icon-text gaps */
+  xs: 8,
+  /** 12pt — compact spacing */
+  sm: 12,
   /** 16pt — standard padding/margin */
   md: 16,
   /** 24pt — section gaps */
   lg: 24,
   /** 32pt — major sections */
   xl: 32,
+  /** 48pt — screen-level separation */
+  '2xl': 48,
 } as const;
 
 // ─── Typography (Apple HIG scale) ────────────────────────
