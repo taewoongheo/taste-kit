@@ -50,30 +50,32 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <ScrollView
-      style={[styles.scroll, { backgroundColor: bg }]}
-      contentContainerStyle={[styles.content, { paddingTop: top + Spacing.md }]}
-    >
-      <View style={styles.headerRow}>
-        <View style={styles.headerText}>
-          <Text variant="hero">Components</Text>
-          <Text variant="label" color="textSecondary">
-            UI 컴포넌트 카탈로그
-          </Text>
-        </View>
-        <AnimatedPressable onPress={handleReplay}>
-          <View style={[styles.replayButton, { backgroundColor: accent }]}>
-            <Ionicons name="refresh" size={20} color="#fff" />
+    <View style={[styles.root, { backgroundColor: bg }]}>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={[styles.content, { paddingTop: top + Spacing.md }]}
+      >
+        <View style={styles.headerRow}>
+          <View style={styles.headerText}>
+            <Text variant="hero">Components</Text>
+            <Text variant="label" color="textSecondary">
+              UI 컴포넌트 카탈로그
+            </Text>
           </View>
-        </AnimatedPressable>
-      </View>
+          <AnimatedPressable onPress={handleReplay}>
+            <View style={[styles.replayButton, { backgroundColor: accent }]}>
+              <Ionicons name="refresh" size={20} color="#fff" />
+            </View>
+          </AnimatedPressable>
+        </View>
 
-      <ComponentsContent
-        key={renderKey}
-        openSheet={openSheet}
-        show={show}
-        setDialogVisible={setDialogVisible}
-      />
+        <ComponentsContent
+          key={renderKey}
+          openSheet={openSheet}
+          show={show}
+          setDialogVisible={setDialogVisible}
+        />
+      </ScrollView>
 
       <Sheet sheetRef={sheetRef} snapPoints={['30%']}>
         <Text variant="subtitle">Bottom Sheet</Text>
@@ -97,7 +99,7 @@ export default function HomeScreen() {
           },
         ]}
       />
-    </ScrollView>
+    </View>
   );
 }
 
@@ -381,6 +383,9 @@ function ComponentsContent({
 }
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
   scroll: {
     flex: 1,
   },
