@@ -3,6 +3,12 @@ import { Colors, Layout, Spacing, Typography } from '@/constants';
 import { useColorScheme } from '@/hooks';
 import { useState } from 'react';
 import {
+  type Control,
+  type FieldValues,
+  type Path,
+  useController,
+} from 'react-hook-form';
+import {
   TextInput as RNTextInput,
   type TextInputProps as RNTextInputProps,
   StyleSheet,
@@ -60,6 +66,30 @@ export function TextInput({ label, error, disabled = false, ...inputProps }: Tex
         </Text>
       )}
     </View>
+  );
+}
+
+export interface ControlledTextInputProps<T extends FieldValues>
+  extends TextInputProps {
+  name: Path<T>;
+  control: Control<T>;
+}
+
+export function ControlledTextInput<T extends FieldValues>({
+  control,
+  name,
+  ...props
+}: ControlledTextInputProps<T>) {
+  const { field, fieldState } = useController({ control, name });
+
+  return (
+    <TextInput
+      onChangeText={field.onChange}
+      onBlur={field.onBlur}
+      value={field.value ?? ''}
+      error={fieldState.error?.message}
+      {...props}
+    />
   );
 }
 
