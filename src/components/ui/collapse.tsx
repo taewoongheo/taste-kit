@@ -2,11 +2,7 @@ import { Timings } from '@/constants';
 import type { ReactNode } from 'react';
 import { useEffect, useRef } from 'react';
 import { View } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 export interface CollapseProps {
   /** Whether the content is expanded */

@@ -1,12 +1,8 @@
-import { Timings } from "@/constants";
-import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  useAnimatedReaction,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
-import { scheduleOnRN } from "react-native-worklets";
-import { Text, type TextColor, type TextVariant } from "./text";
+import { Timings } from '@/constants';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useAnimatedReaction, useSharedValue, withTiming } from 'react-native-reanimated';
+import { scheduleOnRN } from 'react-native-worklets';
+import { Text, type TextColor, type TextVariant } from './text';
 
 export interface AnimatedNumberProps {
   /** The target number to animate to */
@@ -20,7 +16,7 @@ export interface AnimatedNumberProps {
   /** Color token (default: 'text') */
   color?: TextColor;
   /** Text alignment */
-  align?: "left" | "center" | "right";
+  align?: 'left' | 'center' | 'right';
   testID?: string;
 }
 
@@ -28,8 +24,8 @@ export function AnimatedNumber({
   value,
   duration = Timings.slow.duration,
   formatter = (v) => String(Math.round(v)),
-  variant = "title",
-  color = "text",
+  variant = 'title',
+  color = 'text',
   align,
   testID,
 }: AnimatedNumberProps) {

@@ -1,9 +1,9 @@
-import { TapFeedback } from "@/constants";
-import * as Haptics from "expo-haptics";
-import { type ReactNode, useCallback, useState } from "react";
-import { Pressable, type ViewProps } from "react-native";
+import { TapFeedback } from '@/constants';
+import * as Haptics from 'expo-haptics';
+import { type ReactNode, useCallback, useState } from 'react';
+import { Pressable, type ViewProps } from 'react-native';
 
-export interface AnimatedPressableProps extends Omit<ViewProps, "style"> {
+export interface AnimatedPressableProps extends Omit<ViewProps, 'style'> {
   /** Callback on tap */
   onPress?: () => void;
   /** Disabled state */
@@ -15,7 +15,7 @@ export interface AnimatedPressableProps extends Omit<ViewProps, "style"> {
   /** Haptic style (null to disable) */
   haptic?: Haptics.ImpactFeedbackStyle | null;
   /** Style (supports Animated style) */
-  style?: ViewProps["style"];
+  style?: ViewProps['style'];
   children: ReactNode;
 }
 

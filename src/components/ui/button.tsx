@@ -1,16 +1,11 @@
-import { type ColorTokens, Colors, Layout, Spacing } from "@/constants";
-import type { ReactNode } from "react";
-import {
-  ActivityIndicator,
-  StyleSheet,
-  View,
-  useColorScheme,
-} from "react-native";
-import { AnimatedPressable } from "./animated-pressable";
-import { Text, type TextVariant } from "./text";
+import { type ColorTokens, Colors, Layout, Spacing } from '@/constants';
+import type { ReactNode } from 'react';
+import { ActivityIndicator, StyleSheet, View, useColorScheme } from 'react-native';
+import { AnimatedPressable } from './animated-pressable';
+import { Text, type TextVariant } from './text';
 
-export type ButtonVariant = "primary" | "secondary" | "destructive" | "ghost";
-export type ButtonSize = "sm" | "md" | "lg";
+export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'ghost';
+export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export interface ButtonProps {
   /** Button label */
@@ -37,15 +32,15 @@ const sizeConfig: Record<
   ButtonSize,
   { height: number; paddingHorizontal: number; variant: TextVariant }
 > = {
-  sm: { height: 34, paddingHorizontal: Spacing.sm, variant: "label" },
-  md: { height: 44, paddingHorizontal: Spacing.md, variant: "body" },
-  lg: { height: 54, paddingHorizontal: Spacing.lg, variant: "title" },
+  sm: { height: 34, paddingHorizontal: Spacing.sm, variant: 'label' },
+  md: { height: 44, paddingHorizontal: Spacing.md, variant: 'body' },
+  lg: { height: 54, paddingHorizontal: Spacing.lg, variant: 'title' },
 };
 
 export function Button({
   title,
-  variant = "primary",
-  size = "md",
+  variant = 'primary',
+  size = 'md',
   disabled = false,
   loading = false,
   onPress,
@@ -53,7 +48,7 @@ export function Button({
   fullWidth = false,
   testID,
 }: ButtonProps) {
-  const colorScheme = useColorScheme() ?? "light";
+  const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const isDisabled = disabled || loading;
 
@@ -96,11 +91,7 @@ export function Button({
   );
 }
 
-function getVariantStyles(
-  variant: ButtonVariant,
-  colors: ColorTokens,
-  disabled: boolean,
-) {
+function getVariantStyles(variant: ButtonVariant, colors: ColorTokens, disabled: boolean) {
   if (disabled) {
     return {
       container: { backgroundColor: colors.fillSecondary },
@@ -109,24 +100,24 @@ function getVariantStyles(
   }
 
   switch (variant) {
-    case "primary":
+    case 'primary':
       return {
         container: { backgroundColor: colors.accent },
-        textColor: "#FFFFFF",
+        textColor: '#FFFFFF',
       };
-    case "secondary":
+    case 'secondary':
       return {
         container: { backgroundColor: colors.fillPrimary },
         textColor: colors.accent,
       };
-    case "destructive":
+    case 'destructive':
       return {
         container: { backgroundColor: colors.destructive },
-        textColor: "#FFFFFF",
+        textColor: '#FFFFFF',
       };
-    case "ghost":
+    case 'ghost':
       return {
-        container: { backgroundColor: "transparent" },
+        container: { backgroundColor: 'transparent' },
         textColor: colors.accent,
       };
   }
@@ -134,16 +125,16 @@ function getVariantStyles(
 
 const styles = StyleSheet.create({
   base: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   fullWidth: {
-    width: "100%",
+    width: '100%',
   },
   content: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: Spacing.xs,
   },
   icon: {

@@ -2,14 +2,10 @@ import {
   AnimatedNumber,
   AnimatedPressable,
   Button,
-  Card,
   Collapse,
   Dialog,
   Divider,
-  FadeView,
   Image,
-  ListItem,
-  SearchBar,
   Sheet,
   Skeleton,
   Text,
@@ -22,8 +18,8 @@ import { useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
 import { useAppStore } from '@/stores';
 import { Ionicons } from '@expo/vector-icons';
-import * as HapticsLib from 'expo-haptics';
 import type BottomSheet from '@gorhom/bottom-sheet';
+import * as HapticsLib from 'expo-haptics';
 import { router } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -114,7 +110,11 @@ export default function HomeScreen() {
         title="삭제하시겠습니까?"
         message="이 작업은 되돌릴 수 없습니다."
         actions={[
-          { label: '취소', variant: 'ghost', onPress: () => setDialogVisible(false) },
+          {
+            label: '취소',
+            variant: 'ghost',
+            onPress: () => setDialogVisible(false),
+          },
           {
             label: '삭제',
             variant: 'destructive',
@@ -138,8 +138,7 @@ function ComponentsContent({
   show: ReturnType<typeof useToast>['show'];
   setDialogVisible: (v: boolean) => void;
 }) {
-  const accent = useThemeColor('accent');
-  const secondary = useThemeColor('textSecondary');
+  const bgGrouped = useThemeColor('backgroundGrouped');
 
   const s1 = useEntranceStyle(0);
   const s2 = useEntranceStyle(100);
@@ -148,9 +147,8 @@ function ComponentsContent({
   const s5 = useEntranceStyle(400);
 
   const [toggleValue, setToggleValue] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const [collapseExpanded, setCollapseExpanded] = useState(false);
-  const [fadeVisible, setFadeVisible] = useState(true);
+
   const [counterValue, setCounterValue] = useState(0);
 
   // Inline shake animation
@@ -186,20 +184,6 @@ function ComponentsContent({
         <Text variant="caption" color="textSecondary">
           caption · secondary
         </Text>
-      </Animated.View>
-
-      {/* Card */}
-      <Animated.View style={[styles.section, s1]}>
-        <Text variant="subtitle">Card</Text>
-        <Card variant="elevated">
-          <Text>Elevated</Text>
-        </Card>
-        <Card variant="outlined">
-          <Text>Outlined</Text>
-        </Card>
-        <Card variant="filled">
-          <Text>Filled</Text>
-        </Card>
       </Animated.View>
 
       {/* Button */}
@@ -264,36 +248,10 @@ function ComponentsContent({
         <TextInput label="에러 상태" placeholder="입력하세요" error="필수 항목입니다" />
       </Animated.View>
 
-      {/* SearchBar */}
-      <Animated.View style={[styles.section, s2]}>
-        <Text variant="subtitle">SearchBar</Text>
-        <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
-      </Animated.View>
-
-      {/* Toggle & ListItem */}
+      {/* Toggle */}
       <Animated.View style={[styles.section, s3]}>
-        <Text variant="subtitle">ListItem & Toggle</Text>
-        <Card variant="filled" padding={0}>
-          <ListItem
-            title="알림"
-            icon={<Ionicons name="notifications-outline" size={22} color={accent} />}
-            trailing={<Toggle value={toggleValue} onValueChange={setToggleValue} />}
-          />
-          <ListItem
-            title="설정"
-            subtitle="앱 설정을 관리합니다"
-            icon={<Ionicons name="settings-outline" size={22} color={accent} />}
-            trailing={<Ionicons name="chevron-forward" size={18} color={secondary} />}
-            onPress={() => show({ message: '설정 탭', type: 'info' })}
-          />
-          <ListItem
-            title="정보"
-            icon={<Ionicons name="information-circle-outline" size={22} color={accent} />}
-            trailing={<Ionicons name="chevron-forward" size={18} color={secondary} />}
-            onPress={() => show({ message: '정보 탭', type: 'info' })}
-            separator={false}
-          />
-        </Card>
+        <Text variant="subtitle">Toggle</Text>
+        <Toggle value={toggleValue} onValueChange={setToggleValue} />
       </Animated.View>
 
       {/* Divider */}
@@ -322,9 +280,9 @@ function ComponentsContent({
       <Animated.View style={[styles.section, s4]}>
         <Text variant="subtitle">Interactions</Text>
         <AnimatedPressable onPress={openSheet}>
-          <Card variant="filled">
+          <View style={[styles.filledCard, { backgroundColor: bgGrouped }]}>
             <Text>Sheet 열기</Text>
-          </Card>
+          </View>
         </AnimatedPressable>
         <View style={styles.row}>
           <Button
@@ -384,31 +342,18 @@ function ComponentsContent({
           onPress={() => setCollapseExpanded((v) => !v)}
         />
         <Collapse expanded={collapseExpanded}>
-          <Card variant="filled">
+          <View style={[styles.filledCard, { backgroundColor: bgGrouped }]}>
             <Text>접힌 콘텐츠가 여기에 표시됩니다.</Text>
             <Text color="textSecondary" variant="caption">
               height 애니메이션으로 자연스럽게 열고 닫힙니다.
             </Text>
-          </Card>
+          </View>
         </Collapse>
 
         {/* Shake */}
         <Animated.View style={shakeStyle}>
           <Button title="Shake!" variant="destructive" size="sm" onPress={shake} />
         </Animated.View>
-
-        {/* FadeView */}
-        <Button
-          title={fadeVisible ? 'Fade Out' : 'Fade In'}
-          variant="secondary"
-          size="sm"
-          onPress={() => setFadeVisible((v) => !v)}
-        />
-        <FadeView visible={fadeVisible}>
-          <Card variant="filled">
-            <Text>이 카드는 fade in/out 됩니다.</Text>
-          </Card>
-        </FadeView>
 
         {/* AnimatedNumber */}
         <AnimatedNumber value={counterValue} align="center" />
@@ -425,12 +370,7 @@ function ComponentsContent({
             size="sm"
             onPress={() => setCounterValue((v) => v - 50)}
           />
-          <Button
-            title="Reset"
-            variant="ghost"
-            size="sm"
-            onPress={() => setCounterValue(0)}
-          />
+          <Button title="Reset" variant="ghost" size="sm" onPress={() => setCounterValue(0)} />
         </View>
       </Animated.View>
     </>
@@ -460,6 +400,11 @@ const styles = StyleSheet.create({
   skeletonLines: {
     flex: 1,
     gap: Spacing.sm,
+  },
+  filledCard: {
+    borderRadius: 12,
+    padding: Spacing.md,
+    overflow: 'hidden' as const,
   },
   headerRow: {
     flexDirection: 'row',

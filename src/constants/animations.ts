@@ -1,8 +1,4 @@
-import {
-  Easing,
-  type WithSpringConfig,
-  type WithTimingConfig,
-} from "react-native-reanimated";
+import { Easing, type WithSpringConfig, type WithTimingConfig } from 'react-native-reanimated';
 
 // ─── Spring Configs ──────────────────────────────────────
 
@@ -41,7 +37,7 @@ export const Timings = {
 
 export const TapFeedback = {
   /** Scale down on press */
-  scale: 0.99,
+  scale: 0.98,
   /** Opacity on press */
   opacity: 0.8,
 } as const;

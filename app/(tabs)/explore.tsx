@@ -1,4 +1,4 @@
-import { AnimatedPressable, Button, Card, Text } from '@/components/ui';
+import { AnimatedPressable, Button, Text } from '@/components/ui';
 import { Spacing, Springs, Timings } from '@/constants';
 import { useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
@@ -78,6 +78,7 @@ export default function ExploreScreen() {
 
 function TokensContent() {
   const accent = useThemeColor('accent');
+  const bgGrouped = useThemeColor('backgroundGrouped');
   const themeMode = useAppStore((s) => s.themeMode);
   const setThemeMode = useAppStore((s) => s.setThemeMode);
 
@@ -91,14 +92,14 @@ function TokensContent() {
       <Animated.View style={[styles.section, s1]}>
         <Text variant="subtitle">Spring Presets</Text>
         {Object.entries(Springs).map(([name, config]) => (
-          <Card key={name} variant="filled">
+          <View key={name} style={[styles.filledCard, { backgroundColor: bgGrouped }]}>
             <Text variant="subtitle" color="accent">
               {name}
             </Text>
             <Text variant="caption" color="textSecondary">
               damping: {config.damping} · stiffness: {config.stiffness}
             </Text>
-          </Card>
+          </View>
         ))}
       </Animated.View>
 
@@ -106,14 +107,14 @@ function TokensContent() {
       <Animated.View style={[styles.section, s2]}>
         <Text variant="subtitle">Timing Presets</Text>
         {Object.entries(Timings).map(([name, config]) => (
-          <Card key={name} variant="filled">
+          <View key={name} style={[styles.filledCard, { backgroundColor: bgGrouped }]}>
             <Text variant="subtitle" color="accent">
               {name}
             </Text>
             <Text variant="caption" color="textSecondary">
               duration: {config.duration}ms
             </Text>
-          </Card>
+          </View>
         ))}
       </Animated.View>
 
@@ -183,6 +184,11 @@ const styles = StyleSheet.create({
   },
   spacingBox: {
     borderRadius: 4,
+  },
+  filledCard: {
+    borderRadius: 12,
+    padding: Spacing.md,
+    overflow: 'hidden' as const,
   },
   themeRow: {
     flexDirection: 'row',

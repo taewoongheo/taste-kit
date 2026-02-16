@@ -2,20 +2,11 @@ import { render, screen } from '@testing-library/react-native';
 import { Text } from 'react-native';
 import { ErrorBoundary } from '../error-boundary';
 
-jest.mock('react-native-gesture-handler', () => {
-  const actual = jest.requireActual('react-native-gesture-handler');
-  return {
-    ...actual,
-    GestureDetector: ({ children }: { children: React.ReactNode }) => children,
-  };
-});
-
 function ThrowingChild(): React.ReactNode {
   throw new Error('Test error');
 }
 
 describe('ErrorBoundary', () => {
-  // Suppress console.error for expected errors
   const originalError = console.error;
   beforeAll(() => {
     console.error = jest.fn();

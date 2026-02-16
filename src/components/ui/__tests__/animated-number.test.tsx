@@ -16,9 +16,7 @@ describe('AnimatedNumber', () => {
   });
 
   it('accepts variant and color props', () => {
-    const { getByText } = render(
-      <AnimatedNumber value={100} variant="hero" color="accent" />,
-    );
+    const { getByText } = render(<AnimatedNumber value={100} variant="hero" color="accent" />);
 
     expect(getByText('100')).toBeTruthy();
   });
