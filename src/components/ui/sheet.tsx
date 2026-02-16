@@ -1,4 +1,4 @@
-import { Colors, Layout, Spacing } from '@/constants/design-tokens';
+import { Colors, Layout, Spacing } from '@/constants';
 import BottomSheetLib, {
   BottomSheetBackdrop,
   type BottomSheetBackdropProps,

@@ -1,4 +1,4 @@
-import { type ColorTokens, Colors, Layout, Spacing } from '@/constants/design-tokens';
+import { type ColorTokens, Colors, Layout, Spacing } from '@/constants';
 import type { ReactNode } from 'react';
 import { StyleSheet, View, type ViewProps, useColorScheme } from 'react-native';
 

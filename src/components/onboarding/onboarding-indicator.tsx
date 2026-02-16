@@ -1,5 +1,4 @@
-import { Springs } from '@/constants/animations';
-import { Colors, Spacing } from '@/constants/design-tokens';
+import { Colors, Spacing, Springs } from '@/constants';
 import { StyleSheet, View, useColorScheme } from 'react-native';
 import Animated, { type SharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 

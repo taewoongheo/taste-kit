@@ -1,5 +1,4 @@
-import { Colors, Layout, Spacing } from '@/constants';
-import { Springs } from '@/constants/animations';
+import { Colors, Layout, Spacing, Springs } from '@/constants';
 import {
   type ReactNode,
   createContext,

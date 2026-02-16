@@ -1,6 +1,5 @@
 import { AnimatedPressable, Button, Card, Text, useEntrance } from '@/components/ui';
-import { Springs, Timings } from '@/constants/animations';
-import { Spacing } from '@/constants/design-tokens';
+import { Spacing, Springs, Timings } from '@/constants';
 import { useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
 import { type ThemeMode, useAppStore } from '@/stores';
