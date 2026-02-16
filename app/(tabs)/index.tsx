@@ -15,21 +15,47 @@ import {
   Text,
   TextInput,
   Toggle,
-  useEntrance,
-  useShake,
   useToast,
 } from '@/components/ui';
-import { Spacing } from '@/constants';
+import { Spacing, Springs } from '@/constants';
 import { useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
 import { useAppStore } from '@/stores';
 import { Ionicons } from '@expo/vector-icons';
+import * as HapticsLib from 'expo-haptics';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { router } from 'expo-router';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withSequence,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+// Staggered entrance animation — shared value + withDelay + withSpring
+function useEntranceStyle(delay: number) {
+  const opacity = useSharedValue(0);
+  const translateY = useSharedValue(30);
+  const spring = Springs.gentle;
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally run only on mount
+  useEffect(() => {
+    opacity.value = delay > 0 ? withDelay(delay, withSpring(1, spring)) : withSpring(1, spring);
+    translateY.value = delay > 0 ? withDelay(delay, withSpring(0, spring)) : withSpring(0, spring);
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ translateY: translateY.value }],
+  }));
+
+  return animatedStyle;
+}
 
 export default function HomeScreen() {
   const bg = useThemeColor('background');
@@ -115,23 +141,40 @@ function ComponentsContent({
   const accent = useThemeColor('accent');
   const secondary = useThemeColor('textSecondary');
 
-  const s1 = useEntrance({ fade: true, slideY: 30, delay: 0 });
-  const s2 = useEntrance({ fade: true, slideY: 30, delay: 100 });
-  const s3 = useEntrance({ fade: true, slideY: 30, delay: 200 });
-  const s4 = useEntrance({ fade: true, slideY: 30, delay: 300 });
-  const s5 = useEntrance({ fade: true, slideY: 30, delay: 400 });
+  const s1 = useEntranceStyle(0);
+  const s2 = useEntranceStyle(100);
+  const s3 = useEntranceStyle(200);
+  const s4 = useEntranceStyle(300);
+  const s5 = useEntranceStyle(400);
 
   const [toggleValue, setToggleValue] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [collapseExpanded, setCollapseExpanded] = useState(false);
   const [fadeVisible, setFadeVisible] = useState(true);
   const [counterValue, setCounterValue] = useState(0);
-  const { animatedStyle: shakeStyle, shake } = useShake();
+
+  // Inline shake animation
+  const shakeX = useSharedValue(0);
+  const shakeStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: shakeX.value }],
+  }));
+  const shake = useCallback(() => {
+    const distance = 8;
+    const oscillations = 4;
+    const duration = 60;
+    const steps: number[] = [];
+    for (let i = 0; i < oscillations; i++) {
+      steps.push(i % 2 === 0 ? distance : -distance);
+    }
+    steps.push(0);
+    shakeX.value = withSequence(...steps.map((v) => withTiming(v, { duration })));
+    HapticsLib.notificationAsync(HapticsLib.NotificationFeedbackType.Error);
+  }, [shakeX]);
 
   return (
     <>
       {/* Text */}
-      <Animated.View style={[styles.section, s1.animatedStyle]}>
+      <Animated.View style={[styles.section, s1]}>
         <Text variant="subtitle">Text</Text>
         <Text variant="hero">hero</Text>
         <Text variant="title">title</Text>
@@ -146,7 +189,7 @@ function ComponentsContent({
       </Animated.View>
 
       {/* Card */}
-      <Animated.View style={[styles.section, s1.animatedStyle]}>
+      <Animated.View style={[styles.section, s1]}>
         <Text variant="subtitle">Card</Text>
         <Card variant="elevated">
           <Text>Elevated</Text>
@@ -160,7 +203,7 @@ function ComponentsContent({
       </Animated.View>
 
       {/* Button */}
-      <Animated.View style={[styles.section, s1.animatedStyle]}>
+      <Animated.View style={[styles.section, s1]}>
         <Text variant="subtitle">Button</Text>
         <View style={styles.row}>
           <Button title="Primary" variant="primary" size="sm" />
@@ -175,7 +218,7 @@ function ComponentsContent({
       </Animated.View>
 
       {/* Image */}
-      <Animated.View style={[styles.section, s2.animatedStyle]}>
+      <Animated.View style={[styles.section, s2]}>
         <Text variant="subtitle">Image</Text>
         <Image
           source="https://picsum.photos/seed/taste-kit/400/200"
@@ -202,7 +245,7 @@ function ComponentsContent({
       </Animated.View>
 
       {/* TextInput */}
-      <Animated.View style={[styles.section, s2.animatedStyle]}>
+      <Animated.View style={[styles.section, s2]}>
         <Text variant="subtitle">TextInput</Text>
         <TextInput label="이메일" placeholder="example@mail.com" keyboardType="email-address" />
         <TextInput label="비밀번호" placeholder="8자 이상" secureTextEntry />
@@ -210,13 +253,13 @@ function ComponentsContent({
       </Animated.View>
 
       {/* SearchBar */}
-      <Animated.View style={[styles.section, s2.animatedStyle]}>
+      <Animated.View style={[styles.section, s2]}>
         <Text variant="subtitle">SearchBar</Text>
         <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
       </Animated.View>
 
       {/* Toggle & ListItem */}
-      <Animated.View style={[styles.section, s3.animatedStyle]}>
+      <Animated.View style={[styles.section, s3]}>
         <Text variant="subtitle">ListItem & Toggle</Text>
         <Card variant="filled" padding={0}>
           <ListItem
@@ -242,7 +285,7 @@ function ComponentsContent({
       </Animated.View>
 
       {/* Divider */}
-      <Animated.View style={[styles.section, s3.animatedStyle]}>
+      <Animated.View style={[styles.section, s3]}>
         <Text variant="subtitle">Divider</Text>
         <Text color="textSecondary">기본</Text>
         <Divider />
@@ -251,7 +294,7 @@ function ComponentsContent({
       </Animated.View>
 
       {/* Skeleton */}
-      <Animated.View style={[styles.section, s3.animatedStyle]}>
+      <Animated.View style={[styles.section, s3]}>
         <Text variant="subtitle">Skeleton</Text>
         <View style={styles.row}>
           <Skeleton circle height={48} />
@@ -264,7 +307,7 @@ function ComponentsContent({
       </Animated.View>
 
       {/* Interactions */}
-      <Animated.View style={[styles.section, s4.animatedStyle]}>
+      <Animated.View style={[styles.section, s4]}>
         <Text variant="subtitle">Interactions</Text>
         <AnimatedPressable onPress={openSheet}>
           <Card variant="filled">
@@ -304,7 +347,7 @@ function ComponentsContent({
       </Animated.View>
 
       {/* Navigation */}
-      <Animated.View style={[styles.section, s4.animatedStyle]}>
+      <Animated.View style={[styles.section, s4]}>
         <Text variant="subtitle">Navigation</Text>
         <Button
           title="온보딩 다시 보기"
@@ -318,7 +361,7 @@ function ComponentsContent({
       </Animated.View>
 
       {/* Animations */}
-      <Animated.View style={[styles.section, s5.animatedStyle]}>
+      <Animated.View style={[styles.section, s5]}>
         <Text variant="subtitle">Animations</Text>
 
         {/* Collapse */}
@@ -337,7 +380,7 @@ function ComponentsContent({
           </Card>
         </Collapse>
 
-        {/* useShake */}
+        {/* Shake */}
         <Animated.View style={shakeStyle}>
           <Button title="Shake!" variant="destructive" size="sm" onPress={shake} />
         </Animated.View>

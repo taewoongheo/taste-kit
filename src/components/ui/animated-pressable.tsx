@@ -1,12 +1,9 @@
-import { useScalePress } from './use-scale-press';
-import type * as Haptics from 'expo-haptics';
-import type { ReactNode } from 'react';
-import type { ViewProps } from 'react-native';
-import { GestureDetector } from 'react-native-gesture-handler';
-import type { WithSpringConfig } from 'react-native-reanimated';
-import Animated from 'react-native-reanimated';
+import { TapFeedback } from "@/constants";
+import * as Haptics from "expo-haptics";
+import { type ReactNode, useCallback, useState } from "react";
+import { Pressable, type ViewProps } from "react-native";
 
-export interface AnimatedPressableProps extends Omit<ViewProps, 'style'> {
+export interface AnimatedPressableProps extends Omit<ViewProps, "style"> {
   /** Callback on tap */
   onPress?: () => void;
   /** Disabled state */
@@ -17,38 +14,54 @@ export interface AnimatedPressableProps extends Omit<ViewProps, 'style'> {
   opacity?: number;
   /** Haptic style (null to disable) */
   haptic?: Haptics.ImpactFeedbackStyle | null;
-  /** Spring config */
-  spring?: WithSpringConfig;
   /** Style (supports Animated style) */
-  style?: ViewProps['style'];
+  style?: ViewProps["style"];
   children: ReactNode;
 }
 
 export function AnimatedPressable({
   onPress,
   disabled = false,
-  scale,
-  opacity,
-  haptic,
-  spring,
+  scale = TapFeedback.scale,
+  opacity = TapFeedback.opacity,
+  haptic = Haptics.ImpactFeedbackStyle.Light,
   style,
   children,
   ...viewProps
 }: AnimatedPressableProps) {
-  const { gesture, animatedStyle } = useScalePress({
-    scale,
-    opacity,
-    haptic,
-    spring,
-    onPress,
-    disabled,
-  });
+  const [isPressed, setIsPressed] = useState(false);
+
+  const handlePressIn = useCallback(() => {
+    if (haptic != null) {
+      Haptics.impactAsync(haptic);
+    }
+    setIsPressed(true);
+  }, [haptic]);
+
+  const handlePressOut = useCallback(() => {
+    setIsPressed(false);
+  }, []);
+
+  const handlePress = useCallback(() => {
+    onPress?.();
+  }, [onPress]);
 
   return (
-    <GestureDetector gesture={gesture}>
-      <Animated.View style={[style, animatedStyle]} {...viewProps}>
-        {children}
-      </Animated.View>
-    </GestureDetector>
+    <Pressable
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      onPress={handlePress}
+      disabled={disabled}
+      style={[
+        style,
+        {
+          transform: [{ scale: isPressed ? scale : 1 }],
+          opacity: isPressed ? opacity : 1,
+        },
+      ]}
+      {...viewProps}
+    >
+      {children}
+    </Pressable>
   );
 }

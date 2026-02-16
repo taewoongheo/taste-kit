@@ -1,13 +1,38 @@
-import { AnimatedPressable, Button, Card, Text, useEntrance } from '@/components/ui';
+import { AnimatedPressable, Button, Card, Text } from '@/components/ui';
 import { Spacing, Springs, Timings } from '@/constants';
 import { useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
 import { type ThemeMode, useAppStore } from '@/stores';
 import { Ionicons } from '@expo/vector-icons';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withSpring,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+// Staggered entrance animation — shared value + withDelay + withSpring
+function useEntranceStyle(delay: number) {
+  const opacity = useSharedValue(0);
+  const translateY = useSharedValue(30);
+  const spring = Springs.gentle;
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally run only on mount
+  useEffect(() => {
+    opacity.value = delay > 0 ? withDelay(delay, withSpring(1, spring)) : withSpring(1, spring);
+    translateY.value = delay > 0 ? withDelay(delay, withSpring(0, spring)) : withSpring(0, spring);
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ translateY: translateY.value }],
+  }));
+
+  return animatedStyle;
+}
 
 const themeModes: { mode: ThemeMode; label: string }[] = [
   { mode: 'system', label: 'System' },
@@ -56,14 +81,14 @@ function TokensContent() {
   const themeMode = useAppStore((s) => s.themeMode);
   const setThemeMode = useAppStore((s) => s.setThemeMode);
 
-  const s1 = useEntrance({ fade: true, slideY: 30, delay: 0 });
-  const s2 = useEntrance({ fade: true, slideY: 30, delay: 100 });
-  const s3 = useEntrance({ fade: true, slideY: 30, delay: 200 });
+  const s1 = useEntranceStyle(0);
+  const s2 = useEntranceStyle(100);
+  const s3 = useEntranceStyle(200);
 
   return (
     <>
       {/* Spring Presets */}
-      <Animated.View style={[styles.section, s1.animatedStyle]}>
+      <Animated.View style={[styles.section, s1]}>
         <Text variant="subtitle">Spring Presets</Text>
         {Object.entries(Springs).map(([name, config]) => (
           <Card key={name} variant="filled">
@@ -78,7 +103,7 @@ function TokensContent() {
       </Animated.View>
 
       {/* Timing Presets */}
-      <Animated.View style={[styles.section, s2.animatedStyle]}>
+      <Animated.View style={[styles.section, s2]}>
         <Text variant="subtitle">Timing Presets</Text>
         {Object.entries(Timings).map(([name, config]) => (
           <Card key={name} variant="filled">
@@ -93,7 +118,7 @@ function TokensContent() {
       </Animated.View>
 
       {/* Theme Mode */}
-      <Animated.View style={[styles.section, s2.animatedStyle]}>
+      <Animated.View style={[styles.section, s2]}>
         <Text variant="subtitle">Theme</Text>
         <View style={styles.themeRow}>
           {themeModes.map(({ mode, label }) => (
@@ -109,7 +134,7 @@ function TokensContent() {
       </Animated.View>
 
       {/* Spacing */}
-      <Animated.View style={[styles.section, s3.animatedStyle]}>
+      <Animated.View style={[styles.section, s3]}>
         <Text variant="subtitle">Spacing</Text>
         <View style={styles.spacingRow}>
           {(['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const).map((key) => (

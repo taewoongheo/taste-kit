@@ -1,9 +1,7 @@
 import { type ColorTokens, Colors, Layout, Spacing, Typography } from '@/constants';
-import { useScalePress } from './use-scale-press';
-import type { ReactNode } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View, useColorScheme } from 'react-native';
-import { GestureDetector } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import * as Haptics from 'expo-haptics';
+import { useCallback, useState, type ReactNode } from 'react';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -50,17 +48,27 @@ export function Button({
   const colors = Colors[colorScheme];
   const isDisabled = disabled || loading;
 
-  const { gesture, animatedStyle } = useScalePress({
-    onPress,
-    disabled: isDisabled,
-  });
+  const [isPressed, setIsPressed] = useState(false);
+
+  const handlePressIn = useCallback(() => {
+    setIsPressed(true);
+  }, []);
+
+  const handlePressOut = useCallback(() => {
+    setIsPressed(false);
+  }, []);
+
+  const handlePress = useCallback(() => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onPress?.();
+  }, [onPress]);
 
   const variantStyles = getVariantStyles(variant, colors, isDisabled);
   const { height, paddingHorizontal, typography } = sizeConfig[size];
 
   return (
-    <GestureDetector gesture={gesture}>
-      <Animated.View
+    <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} onPress={handlePress} disabled={isDisabled}>
+      <View
         testID={testID}
         accessibilityRole="button"
         accessibilityState={{ disabled: isDisabled }}
@@ -69,7 +77,7 @@ export function Button({
           { height, paddingHorizontal, borderRadius: Layout.radiusMd },
           variantStyles.container,
           fullWidth && styles.fullWidth,
-          animatedStyle,
+          { transform: [{ scale: isPressed ? 0.97 : 1 }] },
         ]}
       >
         {loading ? (
@@ -85,8 +93,8 @@ export function Button({
             </Text>
           </View>
         )}
-      </Animated.View>
-    </GestureDetector>
+      </View>
+    </Pressable>
   );
 }
 
