@@ -4,7 +4,7 @@ import type { BottomSheetMethods } from '@/components/ui/bottom-sheet/types';
 import { Spacing } from '@/constants';
 import { useCallback, useRef } from 'react';
 import { View } from 'react-native';
-import { DemoScreen } from './_wrapper';
+import DemoScreen from './_wrapper';
 
 export default function () {
   const sheetRef = useRef<BottomSheetMethods>(null);

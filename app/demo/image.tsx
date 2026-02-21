@@ -1,5 +1,5 @@
-import { ImageDemo } from '@/components/demo';
-import { DemoScreen } from './_wrapper';
+import { ImageDemo } from "@/components/demo";
+import DemoScreen from "./_wrapper";
 
 export default function () {
   return (

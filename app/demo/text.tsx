@@ -1,5 +1,5 @@
 import { TextDemo } from '@/components/demo';
-import { DemoScreen } from './_wrapper';
+import DemoScreen from './_wrapper';
 
 export default function () {
   return (
