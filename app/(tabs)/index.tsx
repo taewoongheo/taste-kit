@@ -1,53 +1,52 @@
-import {
-  AnimationsDemo,
-  ButtonDemo,
-  DividerDemo,
-  ImageDemo,
-  InputDemo,
-  InteractionsDemo,
-  NavigationDemo,
-  SkeletonDemo,
-  TextDemo,
-  ToggleDemo,
-} from "@/components/demo";
-import {
-  AnimatedPressable,
-  Dialog,
-  Sheet,
-  Text,
-  useToast,
-} from "@/components/ui";
-import { Spacing, Springs } from "@/constants";
-import { useThemeColor } from "@/hooks";
-import { Haptic } from "@/lib";
-import { Ionicons } from "@expo/vector-icons";
-import type BottomSheetType from "@gorhom/bottom-sheet";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { AnimatedPressable, Text } from '@/components/ui';
+import { Spacing, Springs } from '@/constants';
+import { useThemeColor } from '@/hooks';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { useEffect } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withDelay,
   withSpring,
-} from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+} from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-// Staggered entrance animation — shared value + withDelay + withSpring
+const demos = [
+  { title: 'Graphics (Shaders)', route: '/graphics' },
+  { title: 'Text', route: '/demo/text' },
+  { title: 'Button', route: '/demo/button' },
+  { title: 'Image', route: '/demo/image' },
+  { title: 'TextInput', route: '/demo/input' },
+  { title: 'Switch', route: '/demo/toggle' },
+  { title: 'Divider', route: '/demo/divider' },
+  { title: 'Skeleton', route: '/demo/skeleton' },
+  { title: 'Interactions', route: '/demo/interactions' },
+  { title: 'Dialog', route: '/demo/dialog' },
+  { title: 'Animations', route: '/demo/animations' },
+  { title: 'Navigation', route: '/demo/navigation' },
+  { title: 'Accordion', route: '/demo/accordion' },
+  { title: 'Badge', route: '/demo/badge' },
+  { title: 'Avatar', route: '/demo/avatar' },
+  { title: 'Checkbox', route: '/demo/checkbox' },
+  { title: 'Dropdown', route: '/demo/dropdown' },
+  { title: 'Segmented Control', route: '/demo/segmented-control' },
+  { title: 'SearchBar', route: '/demo/search-bar' },
+  { title: 'Picker', route: '/demo/picker' },
+  { title: 'Progress', route: '/demo/progress' },
+  { title: 'Stepper', route: '/demo/stepper' },
+] as const;
+
 function useEntranceStyle(delay: number) {
   const opacity = useSharedValue(0);
-  const translateY = useSharedValue(30);
+  const translateY = useSharedValue(20);
   const spring = Springs.gentle;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally run only on mount
+  // biome-ignore lint/correctness/useExhaustiveDependencies: run only on mount
   useEffect(() => {
-    opacity.value =
-      delay > 0
-        ? withDelay(delay, withSpring(1, spring))
-        : withSpring(1, spring);
-    translateY.value =
-      delay > 0
-        ? withDelay(delay, withSpring(0, spring))
-        : withSpring(0, spring);
+    opacity.value = delay > 0 ? withDelay(delay, withSpring(1, spring)) : withSpring(1, spring);
+    translateY.value = delay > 0 ? withDelay(delay, withSpring(0, spring)) : withSpring(0, spring);
   }, []);
 
   return useAnimatedStyle(() => ({
@@ -56,144 +55,44 @@ function useEntranceStyle(delay: number) {
   }));
 }
 
+function DemoLink({ title, route, index }: { title: string; route: string; index: number }) {
+  const bgGrouped = useThemeColor('backgroundGrouped');
+  const style = useEntranceStyle(index * 30);
+
+  return (
+    <Animated.View style={style}>
+      <AnimatedPressable onPress={() => router.push(route as never)}>
+        <View style={[styles.card, { backgroundColor: bgGrouped }]}>
+          <Text weight="500">{title}</Text>
+          <Ionicons name="chevron-forward" size={18} color="#8E8E93" />
+        </View>
+      </AnimatedPressable>
+    </Animated.View>
+  );
+}
+
 export default function HomeScreen() {
-  const bg = useThemeColor("background");
-  const accent = useThemeColor("accent");
+  const bg = useThemeColor('background');
   const { top } = useSafeAreaInsets();
-  const [renderKey, setRenderKey] = useState(0);
-
-  const sheetRef = useRef<BottomSheetType>(null);
-  const openSheet = useCallback(() => sheetRef.current?.snapToIndex(0), []);
-  const { show } = useToast();
-  const [dialogVisible, setDialogVisible] = useState(false);
-
-  const handleReplay = useCallback(() => {
-    Haptic.tap();
-    setRenderKey((k) => k + 1);
-  }, []);
 
   return (
     <View style={[styles.root, { backgroundColor: bg }]}>
       <ScrollView
         style={styles.scroll}
-        contentContainerStyle={[
-          styles.content,
-          { paddingTop: top + Spacing.md },
-        ]}
+        contentContainerStyle={[styles.content, { paddingTop: top + Spacing.md }]}
       >
-        <View style={styles.headerRow}>
-          <View style={styles.headerText}>
-            <Text variant="hero">Components</Text>
-            <Text variant="label" color="textSecondary">
-              UI 컴포넌트 카탈로그
-            </Text>
-          </View>
-          <AnimatedPressable onPress={handleReplay}>
-            <View style={[styles.replayButton, { backgroundColor: accent }]}>
-              <Ionicons name="refresh" size={20} color="#fff" />
-            </View>
-          </AnimatedPressable>
+        <View style={styles.headerText}>
+          <Text variant="hero">Components</Text>
+          <Text variant="label" color="textSecondary">
+            UI 컴포넌트 카탈로그
+          </Text>
         </View>
 
-        <DemoSections
-          key={renderKey}
-          onOpenSheet={openSheet}
-          onOpenDialog={() => setDialogVisible(true)}
-          showToast={show}
-        />
+        {demos.map((demo, i) => (
+          <DemoLink key={demo.route} title={demo.title} route={demo.route} index={i} />
+        ))}
       </ScrollView>
-
-      <Sheet sheetRef={sheetRef} snapPoints={["30%"]}>
-        <Text variant="subtitle">Bottom Sheet</Text>
-        <Text color="textSecondary">Swipe down to dismiss</Text>
-      </Sheet>
-
-      <Dialog
-        visible={dialogVisible}
-        onDismiss={() => setDialogVisible(false)}
-        title="삭제하시겠습니까?"
-        message="이 작업은 되돌릴 수 없습니다."
-        actions={[
-          {
-            label: "취소",
-            variant: "ghost",
-            onPress: () => setDialogVisible(false),
-          },
-          {
-            label: "삭제",
-            variant: "destructive",
-            onPress: () => {
-              setDialogVisible(false);
-              show({ message: "삭제되었습니다", type: "success" });
-            },
-          },
-        ]}
-      />
     </View>
-  );
-}
-
-function DemoSections({
-  onOpenSheet,
-  onOpenDialog,
-  showToast,
-}: {
-  onOpenSheet: () => void;
-  onOpenDialog: () => void;
-  showToast: ReturnType<typeof useToast>["show"];
-}) {
-  const s1 = useEntranceStyle(0);
-  const s2 = useEntranceStyle(100);
-  const s3 = useEntranceStyle(200);
-  const s4 = useEntranceStyle(300);
-  const s5 = useEntranceStyle(400);
-
-  return (
-    <>
-      <Animated.View style={[styles.section, s1]}>
-        <TextDemo />
-      </Animated.View>
-
-      <Animated.View style={[styles.section, s1]}>
-        <ButtonDemo />
-      </Animated.View>
-
-      <Animated.View style={[styles.section, s2]}>
-        <ImageDemo />
-      </Animated.View>
-
-      <Animated.View style={[styles.section, s2]}>
-        <InputDemo />
-      </Animated.View>
-
-      <Animated.View style={[styles.section, s3]}>
-        <ToggleDemo />
-      </Animated.View>
-
-      <Animated.View style={[styles.section, s3]}>
-        <DividerDemo />
-      </Animated.View>
-
-      <Animated.View style={[styles.section, s3]}>
-        <SkeletonDemo />
-      </Animated.View>
-
-      <Animated.View style={[styles.section, s4]}>
-        <InteractionsDemo
-          onOpenSheet={onOpenSheet}
-          onOpenDialog={onOpenDialog}
-          showToast={showToast}
-        />
-      </Animated.View>
-
-      <Animated.View style={[styles.section, s4]}>
-        <NavigationDemo />
-      </Animated.View>
-
-      <Animated.View style={[styles.section, s5]}>
-        <AnimationsDemo />
-      </Animated.View>
-    </>
   );
 }
 
@@ -202,22 +101,15 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   content: {
     padding: Spacing.md,
-    gap: Spacing.md,
-    paddingBottom: Spacing["2xl"],
+    gap: Spacing.sm,
+    paddingBottom: Spacing['2xl'],
   },
-  section: { gap: Spacing.sm, marginTop: Spacing.md },
-  headerRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  headerText: { flex: 1 },
-  replayButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: Spacing.xs,
+  headerText: { marginBottom: Spacing.md },
+  card: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: Spacing.md,
+    borderRadius: 12,
   },
 });

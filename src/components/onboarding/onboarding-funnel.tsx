@@ -1,5 +1,5 @@
 import { Button, Text } from '@/components/ui';
-import { Spacing } from '@/constants';
+import { Colors, Spacing } from '@/constants';
 import { useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
 import type { ReactNode } from 'react';
@@ -7,9 +7,11 @@ import { useCallback, useRef } from 'react';
 import {
   type NativeScrollEvent,
   type NativeSyntheticEvent,
+  Pressable,
   ScrollView,
   StyleSheet,
   View,
+  useColorScheme,
   useWindowDimensions,
 } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
@@ -44,6 +46,8 @@ export function OnboardingFunnel({
   const { width } = useWindowDimensions();
   const { top, bottom } = useSafeAreaInsets();
   const bg = useThemeColor('background');
+  const colorScheme = useColorScheme() ?? 'light';
+  const colors = Colors[colorScheme];
 
   const scrollRef = useRef<ScrollView>(null);
   const currentIndex = useRef(0);
@@ -79,7 +83,11 @@ export function OnboardingFunnel({
     <View style={[styles.container, { backgroundColor: bg }]}>
       {onSkip && (
         <View style={[styles.skipContainer, { top: top + Spacing.sm }]}>
-          <Button title="건너뛰기" variant="ghost" size="sm" onPress={onSkip} />
+          <Pressable onPress={onSkip}>
+            <Text variant="label" color="accent">
+              건너뛰기
+            </Text>
+          </Pressable>
         </View>
       )}
 
@@ -107,10 +115,15 @@ export function OnboardingFunnel({
       <View style={[styles.footer, { paddingBottom: bottom + Spacing.md }]}>
         <OnboardingIndicator count={steps.length} activeIndex={activeIndex} />
         <Button
-          title={currentIndex.current >= steps.length - 1 ? completeLabel : '다음'}
           onPress={handleNext}
-          fullWidth
-        />
+          height={54}
+          backgroundColor={colors.accent}
+          style={{ width: '100%' }}
+        >
+          <Text variant="label" color="background" weight="600">
+            {currentIndex.current >= steps.length - 1 ? completeLabel : '다음'}
+          </Text>
+        </Button>
       </View>
     </View>
   );

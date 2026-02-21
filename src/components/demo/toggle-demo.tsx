@@ -1,4 +1,4 @@
-import { Text, Toggle } from '@/components/ui';
+import { GooeySwitch, Text } from '@/components/ui';
 import { useState } from 'react';
 
 export function ToggleDemo() {
@@ -6,8 +6,8 @@ export function ToggleDemo() {
 
   return (
     <>
-      <Text variant="subtitle">Toggle</Text>
-      <Toggle value={value} onValueChange={setValue} />
+      <Text variant="subtitle">Switch</Text>
+      <GooeySwitch active={value} onToggle={setValue} size={80} />
     </>
   );
 }

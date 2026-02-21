@@ -1,17 +1,18 @@
-import { AnimatedPressable, Button, Text, type useToast } from '@/components/ui';
-import { Spacing } from '@/constants';
+import { AnimatedPressable, Button, Text } from '@/components/ui';
+import { Colors, Spacing } from '@/constants';
 import { useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, useColorScheme } from 'react-native';
 
 interface InteractionsDemoProps {
   onOpenSheet: () => void;
-  onOpenDialog: () => void;
-  showToast: ReturnType<typeof useToast>['show'];
+  showToast: (msg: string) => void;
 }
 
-export function InteractionsDemo({ onOpenSheet, onOpenDialog, showToast }: InteractionsDemoProps) {
+export function InteractionsDemo({ onOpenSheet, showToast }: InteractionsDemoProps) {
   const bgGrouped = useThemeColor('backgroundGrouped');
+  const colorScheme = useColorScheme() ?? 'light';
+  const colors = Colors[colorScheme];
 
   return (
     <>
@@ -23,29 +24,46 @@ export function InteractionsDemo({ onOpenSheet, onOpenDialog, showToast }: Inter
       </AnimatedPressable>
       <View style={styles.row}>
         <Button
-          title="Toast: success"
-          variant="secondary"
-          size="sm"
-          onPress={() => showToast({ message: '저장되었습니다', type: 'success' })}
-        />
+          height={34}
+          backgroundColor={colors.fillPrimary}
+          onPress={() => showToast('저장되었습니다')}
+        >
+          <Text variant="label" color="accent" weight="600">
+            Toast: success
+          </Text>
+        </Button>
         <Button
-          title="Toast: error"
-          variant="secondary"
-          size="sm"
-          onPress={() => showToast({ message: '오류 발생', type: 'error' })}
-        />
+          height={34}
+          backgroundColor={colors.fillPrimary}
+          onPress={() => showToast('오류 발생')}
+        >
+          <Text variant="label" color="accent" weight="600">
+            Toast: error
+          </Text>
+        </Button>
       </View>
-      <Button title="Dialog 열기" variant="secondary" fullWidth onPress={onOpenDialog} />
       <View style={styles.row}>
-        <Button title="Haptic: tap" variant="ghost" size="sm" onPress={() => Haptic.tap()} />
-        <Button title="Haptic: success" variant="ghost" size="sm" onPress={() => Haptic.success()} />
-        <Button title="Haptic: error" variant="ghost" size="sm" onPress={() => Haptic.error()} />
+        <Button height={34} backgroundColor="transparent" onPress={() => Haptic.tap()}>
+          <Text variant="label" color="accent" weight="600">
+            Haptic: tap
+          </Text>
+        </Button>
+        <Button height={34} backgroundColor="transparent" onPress={() => Haptic.success()}>
+          <Text variant="label" color="accent" weight="600">
+            Haptic: success
+          </Text>
+        </Button>
+        <Button height={34} backgroundColor="transparent" onPress={() => Haptic.error()}>
+          <Text variant="label" color="accent" weight="600">
+            Haptic: error
+          </Text>
+        </Button>
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', gap: Spacing.sm },
+  row: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
   card: { borderRadius: 12, padding: Spacing.md, overflow: 'hidden' as const },
 });

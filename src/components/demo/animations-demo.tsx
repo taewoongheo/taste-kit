@@ -1,9 +1,9 @@
-import { AnimatedNumber, Button, Collapse, Text } from '@/components/ui';
-import { Spacing } from '@/constants';
+import { Button, Collapse, RollingCounter, Text } from '@/components/ui';
+import { Colors, Spacing } from '@/constants';
 import { useThemeColor } from '@/hooks';
 import * as HapticsLib from 'expo-haptics';
 import { useCallback, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, useColorScheme } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -13,6 +13,8 @@ import Animated, {
 
 export function AnimationsDemo() {
   const bgGrouped = useThemeColor('backgroundGrouped');
+  const colorScheme = useColorScheme() ?? 'light';
+  const colors = Colors[colorScheme];
   const [collapseExpanded, setCollapseExpanded] = useState(false);
   const [counterValue, setCounterValue] = useState(0);
 
@@ -38,11 +40,14 @@ export function AnimationsDemo() {
       <Text variant="subtitle">Animations</Text>
 
       <Button
-        title={collapseExpanded ? 'Collapse 닫기' : 'Collapse 열기'}
-        variant="secondary"
-        size="sm"
+        height={34}
+        backgroundColor={colors.fillPrimary}
         onPress={() => setCollapseExpanded((v) => !v)}
-      />
+      >
+        <Text variant="label" color="accent" weight="600">
+          {collapseExpanded ? 'Collapse 닫기' : 'Collapse 열기'}
+        </Text>
+      </Button>
       <Collapse expanded={collapseExpanded}>
         <View style={[styles.card, { backgroundColor: bgGrouped }]}>
           <Text>접힌 콘텐츠가 여기에 표시됩니다.</Text>
@@ -53,24 +58,44 @@ export function AnimationsDemo() {
       </Collapse>
 
       <Animated.View style={shakeStyle}>
-        <Button title="Shake!" variant="destructive" size="sm" onPress={shake} />
+        <Button height={34} backgroundColor={colors.destructive} onPress={shake}>
+          <Text variant="label" color="background" weight="600">
+            Shake!
+          </Text>
+        </Button>
       </Animated.View>
 
-      <AnimatedNumber value={counterValue} align="center" />
+      <RollingCounter
+        value={counterValue}
+        color={colors.text}
+        height={40}
+        width={28}
+        fontSize={32}
+      />
       <View style={styles.row}>
         <Button
-          title="+100"
-          variant="secondary"
-          size="sm"
+          height={34}
+          backgroundColor={colors.fillPrimary}
           onPress={() => setCounterValue((v) => v + 100)}
-        />
+        >
+          <Text variant="label" color="accent" weight="600">
+            +100
+          </Text>
+        </Button>
         <Button
-          title="-50"
-          variant="secondary"
-          size="sm"
+          height={34}
+          backgroundColor={colors.fillPrimary}
           onPress={() => setCounterValue((v) => v - 50)}
-        />
-        <Button title="Reset" variant="ghost" size="sm" onPress={() => setCounterValue(0)} />
+        >
+          <Text variant="label" color="accent" weight="600">
+            -50
+          </Text>
+        </Button>
+        <Button height={34} backgroundColor="transparent" onPress={() => setCounterValue(0)}>
+          <Text variant="label" color="accent" weight="600">
+            Reset
+          </Text>
+        </Button>
       </View>
     </>
   );

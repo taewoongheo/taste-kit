@@ -31,6 +31,12 @@
     }
   },
   "files": {
-    "ignore": ["node_modules", "dist", ".expo", "android", "ios"]
+    "ignore": [
+      "node_modules",
+      "dist",
+      ".expo",
+      "android",
+      "ios"
+    ]
   }
 }

@@ -23,7 +23,11 @@ function DefaultFallback({ resetErrorBoundary }: FallbackProps) {
           앱에서 오류가 발생했습니다.{'\n'}다시 시도해 주세요.
         </Text>
       </View>
-      <Button title="다시 시도" onPress={resetErrorBoundary} />
+      <Button onPress={resetErrorBoundary} width={160} height={44} backgroundColor={colors.accent}>
+        <Text variant="label" color="background" weight="600">
+          다시 시도
+        </Text>
+      </Button>
     </View>
   );
 }

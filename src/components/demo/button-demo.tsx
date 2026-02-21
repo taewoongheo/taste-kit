@@ -1,33 +1,84 @@
 import { Button, Text } from '@/components/ui';
-import { Spacing } from '@/constants';
-import { StyleSheet, View } from 'react-native';
+import { Colors, Spacing } from '@/constants';
+import { StyleSheet, View, useColorScheme } from 'react-native';
 
 export function ButtonDemo() {
+  const colorScheme = useColorScheme() ?? 'light';
+  const colors = Colors[colorScheme];
+
   return (
     <>
       <Text variant="subtitle">Button</Text>
       <View style={styles.row}>
-        <Button title="Primary" variant="primary" size="sm" />
-        <Button title="Secondary" variant="secondary" size="sm" />
+        <Button height={34} backgroundColor={colors.accent} onPress={() => {}}>
+          <Text variant="label" color="background" weight="600">
+            Primary
+          </Text>
+        </Button>
+        <Button height={34} backgroundColor={colors.fillPrimary} onPress={() => {}}>
+          <Text variant="label" color="accent" weight="600">
+            Secondary
+          </Text>
+        </Button>
       </View>
       <View style={styles.row}>
-        <Button title="Destructive" variant="destructive" size="sm" />
-        <Button title="Ghost" variant="ghost" size="sm" />
+        <Button height={34} backgroundColor={colors.destructive} onPress={() => {}}>
+          <Text variant="label" color="background" weight="600">
+            Destructive
+          </Text>
+        </Button>
+        <Button height={34} backgroundColor="transparent" onPress={() => {}}>
+          <Text variant="label" color="accent" weight="600">
+            Ghost
+          </Text>
+        </Button>
       </View>
-      <Button title="Primary sm" variant="primary" size="sm" fullWidth />
-      <Button title="Primary md" variant="primary" size="md" fullWidth />
-      <Button title="Primary lg" variant="primary" size="lg" fullWidth />
-      <Button title="Secondary sm" variant="secondary" size="sm" fullWidth />
-      <Button title="Secondary md" variant="secondary" size="md" fullWidth />
-      <Button title="Secondary lg" variant="secondary" size="lg" fullWidth />
-      <Button title="Destructive sm" variant="destructive" size="sm" fullWidth />
-      <Button title="Destructive md" variant="destructive" size="md" fullWidth />
-      <Button title="Destructive lg" variant="destructive" size="lg" fullWidth />
-      <Button title="Ghost sm" variant="ghost" size="sm" fullWidth />
-      <Button title="Ghost md" variant="ghost" size="md" fullWidth />
-      <Button title="Ghost lg" variant="ghost" size="lg" fullWidth />
-      <Button title="Loading" loading fullWidth />
-      <Button title="Disabled" disabled fullWidth />
+      <Button
+        height={34}
+        backgroundColor={colors.accent}
+        style={{ width: '100%' }}
+        onPress={() => {}}
+      >
+        <Text variant="label" color="background" weight="600">
+          Primary sm
+        </Text>
+      </Button>
+      <Button
+        height={44}
+        backgroundColor={colors.accent}
+        style={{ width: '100%' }}
+        onPress={() => {}}
+      >
+        <Text variant="body" color="background" weight="600">
+          Primary md
+        </Text>
+      </Button>
+      <Button
+        height={54}
+        backgroundColor={colors.accent}
+        style={{ width: '100%' }}
+        onPress={() => {}}
+      >
+        <Text variant="title" color="background" weight="600">
+          Primary lg
+        </Text>
+      </Button>
+      <Button
+        isLoading
+        height={44}
+        backgroundColor={colors.accent}
+        style={{ width: '100%' }}
+        loadingText="Loading..."
+      >
+        <Text variant="body" color="background" weight="600">
+          Loading
+        </Text>
+      </Button>
+      <Button height={44} backgroundColor={colors.fillSecondary} disabled style={{ width: '100%' }}>
+        <Text variant="body" color="textTertiary" weight="600">
+          Disabled
+        </Text>
+      </Button>
     </>
   );
 }
