@@ -1,57 +1,41 @@
 import { InteractionsDemo } from '@/components/demo';
-import {
-  BottomSheet,
-  type BottomSheetMethods,
-  ExpandableBottomSheet,
-  type ExpandableBottomSheetMethods,
-  Text,
-  Toast,
-} from '@/components/ui';
+import { BottomSheet, ExpandableBottomSheet, Text, Toast, useBottomSheet } from '@/components/ui';
 import { Spacing } from '@/constants';
-import { useCallback, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import DemoScreen from './_wrapper';
 
 export default function () {
-  const basicRef = useRef<BottomSheetMethods>(null);
-  const multiSnapRef = useRef<BottomSheetMethods>(null);
-  const scrollRef = useRef<BottomSheetMethods>(null);
-  const expandableRef = useRef<ExpandableBottomSheetMethods>(null);
-  const expandableScrollRef = useRef<ExpandableBottomSheetMethods>(null);
-  const dynamicRef = useRef<BottomSheetMethods>(null);
-  const dynamicExpandableRef = useRef<ExpandableBottomSheetMethods>(null);
-
-  const openBasic = useCallback(() => basicRef.current?.snapToIndex(0), []);
-  const openMultiSnap = useCallback(() => multiSnapRef.current?.snapToIndex(0), []);
-  const openScroll = useCallback(() => scrollRef.current?.snapToIndex(0), []);
-  const openExpandable = useCallback(() => expandableRef.current?.snapToIndex(0), []);
-  const openExpandableScroll = useCallback(() => expandableScrollRef.current?.snapToIndex(0), []);
-  const openDynamic = useCallback(() => dynamicRef.current?.snapToIndex(0), []);
-  const openDynamicExpandable = useCallback(() => dynamicExpandableRef.current?.snapToIndex(0), []);
+  const basic = useBottomSheet();
+  const multiSnap = useBottomSheet();
+  const scroll = useBottomSheet();
+  const expandable = useBottomSheet();
+  const expandableScroll = useBottomSheet();
+  const dynamic = useBottomSheet();
+  const dynamicExpandable = useBottomSheet();
 
   return (
     <View style={{ flex: 1 }}>
       <DemoScreen title="Interactions">
         <InteractionsDemo
-          onOpenSheet={openBasic}
+          onOpenSheet={basic.open}
           showToast={(msg: string) => Toast.show(msg, { type: 'success', duration: 3000 })}
         />
 
         <Text variant="subtitle">Bottom Sheet Demos</Text>
 
         <View style={demoStyles.grid}>
-          <DemoButton label="Basic (30%)" onPress={openBasic} />
-          <DemoButton label="Multi Snap" onPress={openMultiSnap} />
-          <DemoButton label="Scroll Content" onPress={openScroll} />
-          <DemoButton label="Expandable" onPress={openExpandable} />
-          <DemoButton label="Expandable + Scroll" onPress={openExpandableScroll} />
-          <DemoButton label="Dynamic Sizing" onPress={openDynamic} />
-          <DemoButton label="Dynamic Expandable" onPress={openDynamicExpandable} />
+          <DemoButton label="Basic (30%)" onPress={basic.open} />
+          <DemoButton label="Multi Snap" onPress={multiSnap.open} />
+          <DemoButton label="Scroll Content" onPress={scroll.open} />
+          <DemoButton label="Expandable" onPress={expandable.open} />
+          <DemoButton label="Expandable + Scroll" onPress={expandableScroll.open} />
+          <DemoButton label="Dynamic Sizing" onPress={dynamic.open} />
+          <DemoButton label="Dynamic Expandable" onPress={dynamicExpandable.open} />
         </View>
       </DemoScreen>
 
       {/* 1. Basic — single snap */}
-      <BottomSheet ref={basicRef} snapPoints={['30%']}>
+      <BottomSheet ref={basic.ref} snapPoints={['30%']}>
         <View style={demoStyles.content}>
           <Text variant="subtitle">Basic Sheet</Text>
           <Text color="textSecondary">Single snap point at 30%</Text>
@@ -59,7 +43,7 @@ export default function () {
       </BottomSheet>
 
       {/* 2. Multi snap — 30% / 60% */}
-      <BottomSheet ref={multiSnapRef} snapPoints={['30%', '60%']}>
+      <BottomSheet ref={multiSnap.ref} snapPoints={['30%', '60%']}>
         <View style={demoStyles.content}>
           <Text variant="subtitle">Multi Snap</Text>
           <Text color="textSecondary">Drag up for 60%, down for 30%</Text>
@@ -68,7 +52,7 @@ export default function () {
       </BottomSheet>
 
       {/* 3. Scroll content — internal ScrollView */}
-      <BottomSheet ref={scrollRef} snapPoints={['40%', '70%']}>
+      <BottomSheet ref={scroll.ref} snapPoints={['40%', '70%']}>
         <View style={demoStyles.content}>
           <Text variant="subtitle">Scroll Content</Text>
           <Text color="textSecondary">Expand to 70% to scroll</Text>
@@ -81,7 +65,7 @@ export default function () {
       </BottomSheet>
 
       {/* 4. Expandable — detached card effect */}
-      <ExpandableBottomSheet ref={expandableRef} snapPoints={['30%', '60%']}>
+      <ExpandableBottomSheet ref={expandable.ref} snapPoints={['30%', '60%']}>
         <View style={demoStyles.content}>
           <Text variant="subtitle">Expandable</Text>
           <Text color="textSecondary">Drag past 60% to expand</Text>
@@ -90,7 +74,7 @@ export default function () {
       </ExpandableBottomSheet>
 
       {/* 5. Expandable + scroll content */}
-      <ExpandableBottomSheet ref={expandableScrollRef} snapPoints={['30%', '60%']}>
+      <ExpandableBottomSheet ref={expandableScroll.ref} snapPoints={['30%', '60%']}>
         <View style={demoStyles.content}>
           <Text variant="subtitle">Expandable + Scroll</Text>
           <Text color="textSecondary">Expand fully to scroll content</Text>
@@ -103,7 +87,7 @@ export default function () {
       </ExpandableBottomSheet>
 
       {/* 6. Dynamic sizing — content height determines sheet height */}
-      <BottomSheet ref={dynamicRef} snapPoints={['50%']} enableDynamicSizing>
+      <BottomSheet ref={dynamic.ref} snapPoints={['50%']} enableDynamicSizing>
         <View style={demoStyles.content}>
           <Text variant="subtitle">Dynamic Sizing</Text>
           <Text color="textSecondary">Sheet height matches content</Text>
@@ -112,7 +96,7 @@ export default function () {
       </BottomSheet>
 
       {/* 7. Dynamic sizing + expandable — detached card at content height */}
-      <ExpandableBottomSheet ref={dynamicExpandableRef} snapPoints={['50%']} enableDynamicSizing>
+      <ExpandableBottomSheet ref={dynamicExpandable.ref} snapPoints={['50%']} enableDynamicSizing>
         <View style={demoStyles.content}>
           <Text variant="subtitle">Dynamic Expandable</Text>
           <Text color="textSecondary">Opens at content height</Text>

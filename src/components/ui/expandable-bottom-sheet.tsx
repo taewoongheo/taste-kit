@@ -567,7 +567,7 @@ const ExpandableBottomSheet = memo(function ExpandableBottomSheet({
     () => {
       const opacity = interpolate(
         translateY.value,
-        [SCREEN_HEIGHT - maxSnapPoint, SCREEN_HEIGHT],
+        [SCREEN_HEIGHT - minSnapPoint, SCREEN_HEIGHT],
         [backdropOpacity, 0],
         Extrapolation.CLAMP,
       );

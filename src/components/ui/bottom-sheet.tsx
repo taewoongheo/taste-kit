@@ -5,7 +5,7 @@ import {
   impactAsync,
   performAndroidHapticsAsync,
 } from 'expo-haptics';
-import { memo, useCallback, useImperativeHandle, useMemo, useState } from 'react';
+import { memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import {
   Dimensions,
   type LayoutChangeEvent,
@@ -68,8 +68,6 @@ interface BottomSheetProps {
   readonly enableDynamicSizing?: boolean;
 }
 
-// --- Constants ---
-
 const DEFAULT_SPRING_CONFIG: WithSpringConfig = {
   damping: 50,
   stiffness: 400,
@@ -85,8 +83,6 @@ const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const HANDLE_HEIGHT = 28;
 const SCROLL_TOP_THRESHOLD = 1;
 const MAX_DYNAMIC_HEIGHT_RATIO = 0.9;
-
-// --- Utils ---
 
 const parseSnapPoint = <S extends SnapPoint>(snapPoint: S): number => {
   if (typeof snapPoint === 'number') {
@@ -108,7 +104,14 @@ const triggerHaptic = () => {
   }
 };
 
-// --- Component ---
+const useBottomSheet = () => {
+  const ref = useRef<BottomSheetMethods>(null);
+
+  const open = useCallback(() => ref.current?.snapToIndex(0), []);
+  const close = useCallback(() => ref.current?.close(), []);
+
+  return { ref, open, close };
+};
 
 const BottomSheet = memo(function BottomSheet({
   children,
@@ -497,7 +500,7 @@ const BottomSheet = memo(function BottomSheet({
     () => {
       const opacity = interpolate(
         translateY.value,
-        [SCREEN_HEIGHT - maxSnapPoint, SCREEN_HEIGHT],
+        [SCREEN_HEIGHT - minSnapPoint, SCREEN_HEIGHT],
         [backdropOpacity, 0],
         Extrapolation.CLAMP,
       );
@@ -632,5 +635,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export { BottomSheet, parseSnapPoint, triggerHaptic, SCREEN_HEIGHT, HANDLE_HEIGHT };
+export { BottomSheet, useBottomSheet, parseSnapPoint, triggerHaptic, SCREEN_HEIGHT, HANDLE_HEIGHT };
 export type { BottomSheetMethods, BottomSheetProps, SnapPoint };
