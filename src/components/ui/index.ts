@@ -26,12 +26,12 @@ export type {
   DialogComponent,
 } from './dialog/types';
 export { BottomSheet } from './bottom-sheet';
-export type { BottomSheetProps, BottomSheetMethods, SnapPoint } from './bottom-sheet/types';
+export type { BottomSheetProps, BottomSheetMethods, SnapPoint } from './bottom-sheet';
 export { ExpandableBottomSheet } from './expandable-bottom-sheet';
 export type {
   ExpandableBottomSheetProps,
   ExpandableBottomSheetMethods,
-} from './expandable-bottom-sheet/types';
+} from './expandable-bottom-sheet';
 export {
   Toast,
   ToastProviderWithViewport,
