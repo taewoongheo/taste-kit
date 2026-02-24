@@ -77,9 +77,9 @@ export const Button = memo<ButtonProps>(function Button({
   const scale = useSharedValue<number>(1);
   const loadingProgress = useDerivedValue(() => withTiming(isLoading ? 1 : 0, { duration: 250 }));
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return { transform: [{ scale: scale.value }] };
-  });
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
 
   const childrenStyle = useAnimatedStyle(() => ({
     opacity: interpolate(loadingProgress.value, [0, 1], [1, 0], Extrapolation.CLAMP),

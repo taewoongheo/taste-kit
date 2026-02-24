@@ -1,6 +1,14 @@
 // @ts-nocheck
 import { BlurView } from 'expo-blur';
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import type { BlurTint } from 'expo-blur';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  type ReactNode,
+} from 'react';
 import {
   Modal,
   Pressable,
@@ -10,28 +18,63 @@ import {
   View,
 } from 'react-native';
 import Animated, {
-  useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
+  type SharedValue,
   withTiming,
   interpolate,
   Easing,
   Extrapolation,
-  LinearTransition,
-  withSpring,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
-import type {
-  DialogBackdropProps,
-  DialogCloseProps,
-  DialogComponent,
-  DialogProps,
-  DialogTriggerProps,
-  ExtendedDialogContentProps,
-  ExtendedDialogContextType,
-} from './types';
 
-const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
+// ─── Types ───────────────────────────────────────────────────────────────────
+
+interface DialogContextType {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+}
+
+export interface DialogProps {
+  children: ReactNode;
+}
+
+export interface DialogTriggerProps {
+  children: ReactNode;
+  readonly asChild?: boolean;
+}
+
+export interface DialogContentProps {
+  children: ReactNode;
+  readonly onClose?: () => void;
+  readonly backdropBlur?: number;
+  readonly backdropColor?: string;
+  readonly backdropTint?: BlurTint;
+}
+
+export interface DialogCloseProps {
+  children: ReactNode;
+  readonly asChild?: boolean;
+}
+
+export interface DialogComponent extends React.FC<DialogProps> {
+  Trigger: React.FC<DialogTriggerProps>;
+  Content: React.FC<DialogContentProps>;
+  Close: React.FC<DialogCloseProps>;
+}
+
+interface ExtendedDialogContextType extends DialogContextType {
+  closeDialog: () => void;
+  animationProgress: SharedValue<number>;
+}
+
+interface ExtendedDialogContentProps extends DialogContentProps {
+  readonly isAnimating?: boolean;
+  readonly setIsAnimating?: (animating: boolean) => void;
+}
+
+// ─── Context ─────────────────────────────────────────────────────────────────
+
 const DialogContext = createContext<ExtendedDialogContextType | undefined>(undefined);
 
 const useDialogContext = (): ExtendedDialogContextType => {
@@ -41,6 +84,8 @@ const useDialogContext = (): ExtendedDialogContextType => {
   }
   return context;
 };
+
+// ─── Components ──────────────────────────────────────────────────────────────
 
 export const Dialog: DialogComponent = ({ children }: DialogProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -64,7 +109,7 @@ export const Dialog: DialogComponent = ({ children }: DialogProps) => {
             ...child.props,
             isAnimating,
             setIsAnimating,
-          } as any);
+          });
         }
         return child;
       })}
@@ -72,6 +117,8 @@ export const Dialog: DialogComponent = ({ children }: DialogProps) => {
   );
 };
 
+// If children has its own Pressable (e.g. Button), use asChild to inject onPress directly.
+// Without asChild, nested Pressable intercepts touch and the trigger won't fire.
 const DialogTrigger: React.FC<DialogTriggerProps> = ({ children, asChild }) => {
   const { setIsOpen } = useDialogContext();
 
@@ -88,47 +135,12 @@ const DialogTrigger: React.FC<DialogTriggerProps> = ({ children, asChild }) => {
   return <Pressable onPress={handlePress}>{children}</Pressable>;
 };
 
-const DialogBackdrop: React.FC<DialogBackdropProps> = ({
-  children,
-  blurAmount = 20,
-  backgroundColor = 'rgba(0, 0, 0, 0.5)',
-  blurType = 'dark',
-}) => {
-  const { animationProgress } = useDialogContext();
-
-  const backdropAnimatedStyle = useAnimatedStyle(() => {
-    const opacity = interpolate(animationProgress.value, [0, 1], [0, 1], Extrapolation.CLAMP);
-
-    return {
-      opacity,
-    };
-  });
-
-  const backdropBlurAnimatedProps = useAnimatedProps(() => {
-    return {
-      intensity: withSpring(
-        interpolate(animationProgress.value, [0, 1], [0, blurAmount], Extrapolation.CLAMP),
-      ),
-    };
-  });
-
-  return (
-    <Animated.View style={[styles.backdrop, backdropAnimatedStyle]}>
-      <AnimatedBlurView
-        style={StyleSheet.absoluteFill}
-        animatedProps={backdropBlurAnimatedProps}
-        layout={LinearTransition.duration(300).easing(Easing.inOut(Easing.ease))}
-        tint={blurType}
-      />
-      <View style={[StyleSheet.absoluteFill, { backgroundColor }]} />
-      {children}
-    </Animated.View>
-  );
-};
-
 const DialogContent: React.FC<ExtendedDialogContentProps> = ({
   children,
   onClose,
+  backdropBlur = 20,
+  backdropColor = 'rgba(0, 0, 0, 0.5)',
+  backdropTint = 'dark',
   isAnimating: externalIsAnimating,
   setIsAnimating: externalSetIsAnimating,
 }) => {
@@ -137,17 +149,18 @@ const DialogContent: React.FC<ExtendedDialogContentProps> = ({
   useEffect(() => {
     if (isOpen) {
       animationProgress.value = withTiming(1, {
-        duration: 550,
+        duration: 300,
+        easing: Easing.bezier(0.2, 0, 0, 1),
       });
     }
-  }, [isOpen]);
+  }, [isOpen, animationProgress]);
 
   useEffect(() => {
     if (externalIsAnimating) {
       animationProgress.value = withTiming(
         0,
         {
-          duration: 650,
+          duration: 250,
           easing: Easing.bezier(0.4, 0, 1, 1),
         },
         (finished) => {
@@ -161,7 +174,7 @@ const DialogContent: React.FC<ExtendedDialogContentProps> = ({
         },
       );
     }
-  }, [externalIsAnimating]);
+  }, [externalIsAnimating, animationProgress, externalSetIsAnimating, onClose, setIsOpen]);
 
   const handleBackdropPress = useCallback(() => {
     externalSetIsAnimating?.(true);
@@ -172,56 +185,25 @@ const DialogContent: React.FC<ExtendedDialogContentProps> = ({
   }, [externalSetIsAnimating]);
 
   const contentStyle = useAnimatedStyle(() => {
-    const opacity = externalIsAnimating
-      ? interpolate(
-          animationProgress.value,
-          [0, 0.7, 0.4, 1],
-          [0, 0.7, 0.4, 1],
-          Extrapolation.CLAMP,
-        )
-      : interpolate(
-          animationProgress.value,
-          [0, 0.8, 0.9, 1],
-          [0, 0.8, 0.9, 1],
-          Extrapolation.CLAMP,
-        );
-
-    const rotateX = externalIsAnimating
-      ? interpolate(animationProgress.value, [0, 1], [-55, 0], Extrapolation.CLAMP)
-      : interpolate(animationProgress.value, [0, 1], [-25, 0], Extrapolation.CLAMP);
-
-    const translateY = interpolate(animationProgress.value, [0, 1], [20, 0], Extrapolation.EXTEND);
-
-    const skewX = interpolate(animationProgress.value, [0, 1], [-1.5, 0], Extrapolation.CLAMP);
+    const opacity = interpolate(animationProgress.value, [0, 1], [0, 1], Extrapolation.CLAMP);
 
     const scale = externalIsAnimating
-      ? interpolate(animationProgress.value, [0, 1], [0.6, 1], Extrapolation.CLAMP)
-      : interpolate(animationProgress.value, [0, 1], [0.85, 1], Extrapolation.CLAMP);
+      ? interpolate(animationProgress.value, [0, 1], [0.85, 1], Extrapolation.CLAMP)
+      : interpolate(animationProgress.value, [0, 1], [0.92, 1], Extrapolation.CLAMP);
+
+    const translateY = interpolate(animationProgress.value, [0, 1], [12, 0], Extrapolation.CLAMP);
 
     return {
       opacity,
-      transform: [
-        { perspective: 1000 },
-        { rotateX: `${rotateX}deg` },
-        { translateY },
-        { scale },
-        { skewX: `${skewX}deg` },
-      ],
+      transform: [{ scale }, { translateY }],
     };
   });
 
-  const contentBlurAnimatedProps = useAnimatedProps(() => {
-    return {
-      intensity: externalIsAnimating
-        ? interpolate(animationProgress.value, [0, 0.5, 1], [45, 30, 0], Extrapolation.CLAMP)
-        : interpolate(
-            animationProgress.value,
-            [0, 0.7, 0.4, 1],
-            [13, 10, 5, 0],
-            Extrapolation.CLAMP,
-          ),
-    };
-  });
+  // Static BlurView, animated via parent opacity (GPU-composited, no native blur recalc)
+  // Blur reaches full opacity early to minimize text ghosting in mid-opacity range
+  const backdropAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(animationProgress.value, [0, 0.35, 1], [0, 1, 1], Extrapolation.CLAMP),
+  }));
 
   if (!isOpen) return null;
 
@@ -235,22 +217,17 @@ const DialogContent: React.FC<ExtendedDialogContentProps> = ({
     >
       <TouchableWithoutFeedback onPress={handleBackdropPress}>
         <View style={styles.modalContainer}>
+          <Animated.View style={[StyleSheet.absoluteFill, backdropAnimatedStyle]}>
+            <BlurView
+              style={StyleSheet.absoluteFill}
+              intensity={backdropBlur}
+              tint={backdropTint}
+            />
+            <View style={[StyleSheet.absoluteFill, { backgroundColor: backdropColor }]} />
+          </Animated.View>
           <Animated.View style={[styles.contentWrapper, contentStyle]}>
             <TouchableWithoutFeedback>
-              <View>
-                {children}
-                <AnimatedBlurView
-                  style={[
-                    StyleSheet.absoluteFill,
-                    {
-                      overflow: 'hidden',
-                    },
-                  ]}
-                  animatedProps={contentBlurAnimatedProps}
-                  tint="prominent"
-                  pointerEvents="none"
-                />
-              </View>
+              <View>{children}</View>
             </TouchableWithoutFeedback>
           </Animated.View>
         </View>
@@ -278,12 +255,10 @@ const DialogClose: React.FC<DialogCloseProps> = ({ children, asChild }) => {
 Dialog.Trigger = DialogTrigger;
 Dialog.Content = DialogContent;
 Dialog.Close = DialogClose;
-Dialog.Backdrop = DialogBackdrop;
+
+// ─── Styles ──────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
-  backdrop: {
-    ...StyleSheet.absoluteFillObject,
-  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -293,6 +268,6 @@ const styles = StyleSheet.create({
   contentWrapper: {
     width: '100%',
     maxWidth: 400,
+    alignItems: 'center',
   },
-  content: {},
 });

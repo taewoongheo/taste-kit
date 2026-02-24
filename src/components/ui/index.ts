@@ -22,9 +22,8 @@ export type {
   DialogTriggerProps,
   DialogContentProps,
   DialogCloseProps,
-  DialogBackdropProps,
   DialogComponent,
-} from './dialog/types';
+} from './dialog';
 export { BottomSheet, useBottomSheet } from './bottom-sheet';
 export type { BottomSheetProps, BottomSheetMethods, SnapPoint } from './bottom-sheet';
 export { ExpandableBottomSheet } from './expandable-bottom-sheet';

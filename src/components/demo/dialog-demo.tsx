@@ -10,29 +10,27 @@ export function DialogDemo() {
     <>
       <Text variant="subtitle">Dialog</Text>
       <Dialog>
-        <Dialog.Trigger>
+        <Dialog.Trigger asChild>
           <Button fullWidth={false} variant="secondary" size="sm">
             <Text variant="label" color="accent" bold>
               Dialog 열기
             </Text>
           </Button>
         </Dialog.Trigger>
-        <Dialog.Content>
-          <Dialog.Backdrop blurAmount={20} backgroundColor="rgba(0,0,0,0.5)">
-            <View style={[styles.card, { backgroundColor: colors.backgroundElevated }]}>
-              <Text variant="title">알림</Text>
-              <Text color="textSecondary" style={{ textAlign: 'center' }}>
-                이것은 Reacticx Dialog 컴포넌트입니다. 3D 원근감 애니메이션으로 열리고 닫힙니다.
-              </Text>
-              <Dialog.Close>
-                <Button style={styles.closeBtn}>
-                  <Text variant="label" color="background" bold>
-                    닫기
-                  </Text>
-                </Button>
-              </Dialog.Close>
-            </View>
-          </Dialog.Backdrop>
+        <Dialog.Content backdropBlur={10} backdropColor="rgba(0,0,0,0.2)">
+          <View style={[styles.card, { backgroundColor: colors.backgroundElevated }]}>
+            <Text variant="title">알림</Text>
+            <Text color="textSecondary" style={{ textAlign: 'center' }}>
+              이것은 Reacticx Dialog 컴포넌트입니다. 3D 원근감 애니메이션으로 열리고 닫힙니다.
+            </Text>
+            <Dialog.Close asChild>
+              <Button style={styles.closeBtn}>
+                <Text variant="label" color="background" bold>
+                  닫기
+                </Text>
+              </Button>
+            </Dialog.Close>
+          </View>
         </Dialog.Content>
       </Dialog>
     </>

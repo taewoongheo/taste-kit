@@ -5,18 +5,13 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
-  withSequence,
   withTiming,
 } from 'react-native-reanimated';
 
 export interface SkeletonProps {
-  /** Width (default: '100%') */
   width?: number | string;
-  /** Height (default: 20) */
   height?: number;
-  /** Border radius (default: Layout.radiusSm) */
   radius?: number;
-  /** Circle mode — sets radius to height/2 */
   circle?: boolean;
 }
 
@@ -31,10 +26,7 @@ export function Skeleton({
   const opacity = useSharedValue(1);
 
   useEffect(() => {
-    opacity.value = withRepeat(
-      withSequence(withTiming(0.4, { duration: 800 }), withTiming(1, { duration: 800 })),
-      -1,
-    );
+    opacity.value = withRepeat(withTiming(0.4, { duration: 800 }), -1, true);
   }, [opacity]);
 
   const animatedStyle = useAnimatedStyle(() => ({
