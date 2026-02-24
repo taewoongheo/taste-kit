@@ -17,7 +17,7 @@ export function CheckboxDemo() {
       {['알림 받기', '다크 모드', '자동 저장'].map((label, i) => (
         <AnimatedPressable key={label} onPress={() => toggle(i)}>
           <View style={styles.row}>
-            <Checkbox checked={checks[i]} checkmarkColor={accent} size={24} />
+            <Checkbox checked={checks[i]} checkmarkColor={accent} size={40} />
             <Text>{label}</Text>
           </View>
         </AnimatedPressable>

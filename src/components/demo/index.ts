@@ -1,7 +1,7 @@
 export { AccordionDemo } from './accordion-demo';
 export { AnimationsDemo } from './animations-demo';
 export { AvatarDemo } from './avatar-demo';
-export { BadgeDemo } from './badge-demo';
+export { default as TagDemo } from './tag-demo';
 export { ButtonDemo } from './button-demo';
 export { CheckboxDemo } from './checkbox-demo';
 export { DialogDemo } from './dialog-demo';

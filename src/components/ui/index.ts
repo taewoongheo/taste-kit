@@ -46,7 +46,8 @@ export type { IGooeySwitch as GooeySwitchProps } from './gooey-switch/types';
 // Reacticx new components
 export { Accordion, AccordionThemes } from './accordion';
 export { Avatar } from './avatar';
-export { default as Badge } from './badge';
+export { Tag } from './tag';
+export type { TagProps, TagVariant } from './tag';
 export { Checkbox } from './checkbox';
 export { default as Dropdown } from './dropdown';
 export { Picker } from './picker';

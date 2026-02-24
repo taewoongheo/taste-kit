@@ -68,7 +68,7 @@ const StrokePath: React.FC<IStrokePath> = ({
 };
 
 export const Checkbox: React.FC<ICheckbox> = memo(
-  ({ checked = false, checkmarkColor, stroke = 1.5, size, showBorder = false }: ICheckbox) => {
+  ({ checked = false, checkmarkColor, stroke = 4, size, showBorder = false }: ICheckbox) => {
     const animValue = useSharedValue(checked ? 1 : 0);
     const borderAnimValue = useSharedValue(showBorder ? 1 : 0);
     const scaleValue = useSharedValue(1);

@@ -27,7 +27,7 @@ const demos = [
   { title: 'Animations', route: '/demo/animations' },
   { title: 'Navigation', route: '/demo/navigation' },
   { title: 'Accordion', route: '/demo/accordion' },
-  { title: 'Badge', route: '/demo/badge' },
+  { title: 'Tag', route: '/demo/tag' },
   { title: 'Avatar', route: '/demo/avatar' },
   { title: 'Checkbox', route: '/demo/checkbox' },
   { title: 'Dropdown', route: '/demo/dropdown' },
