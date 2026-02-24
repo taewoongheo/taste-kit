@@ -50,7 +50,7 @@ export { Tag } from './tag';
 export type { TagProps, TagVariant } from './tag';
 export { Checkbox } from './checkbox';
 export type { CheckboxProps, CheckboxSize } from './checkbox';
-export { default as Dropdown } from './dropdown';
+export { default as Dropdown, PanDropdown } from './dropdown';
 export { Picker } from './picker';
 export { AnimatedProgressBar as Progress } from './progress';
 export { default as SegmentedControl } from './segmented-control';
