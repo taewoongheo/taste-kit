@@ -18,4 +18,5 @@ export { SegmentedControlDemo } from './segmented-control-demo';
 export { SkeletonDemo } from './skeleton-demo';
 export { StepperDemo } from './stepper-demo';
 export { TextDemo } from './text-demo';
+export { default as ToastDemo } from './toast-demo';
 export { ToggleDemo } from './toggle-demo';

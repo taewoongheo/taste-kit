@@ -36,6 +36,7 @@ const demos = [
   { title: 'Picker', route: '/demo/picker' },
   { title: 'Progress', route: '/demo/progress' },
   { title: 'Stepper', route: '/demo/stepper' },
+  { title: 'Toast', route: '/demo/toast' },
 ] as const;
 
 function useEntranceStyle(delay: number) {

@@ -1,26 +1,31 @@
-import { AnimatedPressable, Text } from '@/components/ui';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Checkbox, Text } from '@/components/ui';
 import { Spacing } from '@/constants';
 import { useThemeColor } from '@/hooks';
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 export function CheckboxDemo() {
   const accent = useThemeColor('accent');
-  const [checks, setChecks] = useState([true, false, false]);
+  const sizes = ['sm', 'md'] as const;
+  const labels = ['Small', 'Medium'];
+  const [checks, setChecks] = useState([true, false]);
 
   const toggle = (i: number) => setChecks((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
 
   return (
     <>
       <Text variant="subtitle">Checkbox</Text>
-      {['알림 받기', '다크 모드', '자동 저장'].map((label, i) => (
-        <AnimatedPressable key={label} onPress={() => toggle(i)}>
+      {sizes.map((size, i) => (
+        <Pressable
+          key={size}
+          onPress={() => toggle(i)}
+          style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}
+        >
           <View style={styles.row}>
-            <Checkbox checked={checks[i]} checkmarkColor={accent} size={40} />
-            <Text>{label}</Text>
+            <Checkbox checked={checks[i]} checkmarkColor={accent} size={size} />
+            <Text>{labels[i]}</Text>
           </View>
-        </AnimatedPressable>
+        </Pressable>
       ))}
     </>
   );
