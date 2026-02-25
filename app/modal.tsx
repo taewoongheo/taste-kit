@@ -1,10 +1,12 @@
 import { Text } from '@/components/ui';
-import { Spacing } from '@/constants';
-import { useThemeColor } from '@/hooks';
+import { Colors, Spacing } from '@/constants';
+import { useColorScheme } from '@/hooks';
 import { StyleSheet, View } from 'react-native';
 
 export default function ModalScreen() {
-  const backgroundColor = useThemeColor('background');
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme];
+  const backgroundColor = colors.background;
 
   return (
     <View style={[styles.container, { backgroundColor }]}>

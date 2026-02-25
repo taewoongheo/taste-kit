@@ -2,16 +2,18 @@ import { ChromaRing } from '@/components/graphics/chroma-ring';
 import { GrainyGradient } from '@/components/graphics/grainy-gradient';
 import { AnimatedMeshGradient } from '@/components/graphics/mesh-gradient';
 import { AnimatedPressable, Text } from '@/components/ui';
-import { Spacing } from '@/constants';
-import { useThemeColor } from '@/hooks';
+import { Colors, Spacing } from '@/constants';
+import { useColorScheme } from '@/hooks';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function GraphicsScreen() {
-  const bg = useThemeColor('background');
-  const accent = useThemeColor('accent');
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme];
+  const bg = colors.background;
+  const accent = colors.accent;
   const { top } = useSafeAreaInsets();
   const { width: screenWidth } = useWindowDimensions();
   const cardWidth = screenWidth - Spacing.md * 2;

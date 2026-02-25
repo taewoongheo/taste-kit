@@ -1,6 +1,6 @@
 import { AnimatedPressable, Text } from '@/components/ui';
-import { Spacing, Springs } from '@/constants';
-import { useThemeColor } from '@/hooks';
+import { Colors, Spacing, Springs } from '@/constants';
+import { useColorScheme } from '@/hooks';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect } from 'react';
@@ -48,7 +48,9 @@ function useEntranceStyle(delay: number) {
 }
 
 function DemoLink({ title, route, index }: { title: string; route: string; index: number }) {
-  const bgGrouped = useThemeColor('backgroundGrouped');
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme];
+  const bgGrouped = colors.backgroundGrouped;
   const style = useEntranceStyle(index * 30);
 
   return (
@@ -64,7 +66,9 @@ function DemoLink({ title, route, index }: { title: string; route: string; index
 }
 
 export default function HomeScreen() {
-  const bg = useThemeColor('background');
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme];
+  const bg = colors.background;
   const { top } = useSafeAreaInsets();
 
   return (

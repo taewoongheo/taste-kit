@@ -1,11 +1,11 @@
 import { AnimatedPressable, Button, Text } from '@/components/ui';
 import { Colors, Spacing, Springs, Timings } from '@/constants';
-import { useThemeColor } from '@/hooks';
+import { useColorScheme } from '@/hooks';
 import { Haptic } from '@/lib';
 import { type ThemeMode, useAppStore } from '@/stores';
 import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View, useColorScheme } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -41,8 +41,10 @@ const themeModes: { mode: ThemeMode; label: string }[] = [
 ];
 
 export default function ExploreScreen() {
-  const bg = useThemeColor('background');
-  const accent = useThemeColor('accent');
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme];
+  const bg = colors.background;
+  const accent = colors.accent;
 
   const { top } = useSafeAreaInsets();
   const [renderKey, setRenderKey] = useState(0);
@@ -77,10 +79,10 @@ export default function ExploreScreen() {
 }
 
 function TokensContent() {
-  const accent = useThemeColor('accent');
-  const bgGrouped = useThemeColor('backgroundGrouped');
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
+  const accent = colors.accent;
+  const bgGrouped = colors.backgroundGrouped;
   const themeMode = useAppStore((s) => s.themeMode);
   const setThemeMode = useAppStore((s) => s.setThemeMode);
 

@@ -1,11 +1,11 @@
-import { AnimatedPressable, Text } from "@/components/ui";
-import { Spacing } from "@/constants";
-import { useThemeColor } from "@/hooks";
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import type { ReactNode } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { AnimatedPressable, Text } from '@/components/ui';
+import { Colors, Spacing } from '@/constants';
+import { useColorScheme } from '@/hooks';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import type { ReactNode } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function DemoScreen({
   title,
@@ -14,18 +14,17 @@ export default function DemoScreen({
   title: string;
   children: ReactNode;
 }) {
-  const bg = useThemeColor("background");
-  const accent = useThemeColor("accent");
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme];
+  const bg = colors.background;
+  const accent = colors.accent;
   const { top } = useSafeAreaInsets();
 
   return (
     <View style={[styles.root, { backgroundColor: bg }]}>
       <ScrollView
         style={styles.scroll}
-        contentContainerStyle={[
-          styles.content,
-          { paddingTop: top + Spacing.md },
-        ]}
+        contentContainerStyle={[styles.content, { paddingTop: top + Spacing.md }]}
       >
         <View style={styles.header}>
           <AnimatedPressable onPress={() => router.back()}>
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
   content: {
     padding: Spacing.md,
     gap: Spacing.md,
-    paddingBottom: Spacing["2xl"],
+    paddingBottom: Spacing['2xl'],
   },
-  header: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
+  header: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 });
