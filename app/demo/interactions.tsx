@@ -1,5 +1,4 @@
-import { InteractionsDemo } from '@/components/demo';
-import { BottomSheet, ExpandableBottomSheet, Text, Toast, useBottomSheet } from '@/components/ui';
+import { BottomSheet, ExpandableBottomSheet, Text, useBottomSheet } from '@/components/ui';
 import { Spacing } from '@/constants';
 import { StyleSheet, View } from 'react-native';
 import DemoScreen from './_wrapper';
@@ -15,14 +14,7 @@ export default function () {
 
   return (
     <View style={{ flex: 1 }}>
-      <DemoScreen title="Interactions">
-        <InteractionsDemo
-          onOpenSheet={basic.open}
-          showToast={(msg: string) => Toast.show(msg, { type: 'success', duration: 3000 })}
-        />
-
-        <Text variant="subtitle">Bottom Sheet Demos</Text>
-
+      <DemoScreen title="Bottom Sheet">
         <View style={demoStyles.grid}>
           <DemoButton label="Basic (30%)" onPress={basic.open} />
           <DemoButton label="Multi Snap" onPress={multiSnap.open} />
@@ -57,6 +49,7 @@ export default function () {
           <Text variant="subtitle">Scroll Content</Text>
           <Text color="textSecondary">Expand to 70% to scroll</Text>
           {Array.from({ length: 20 }, (_, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: fixed placeholder list
             <View key={i} style={demoStyles.listItem}>
               <Text>Scroll item {i + 1}</Text>
             </View>
@@ -79,6 +72,7 @@ export default function () {
           <Text variant="subtitle">Expandable + Scroll</Text>
           <Text color="textSecondary">Expand fully to scroll content</Text>
           {Array.from({ length: 30 }, (_, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: fixed placeholder list
             <View key={i} style={demoStyles.listItem}>
               <Text>Item {i + 1}</Text>
             </View>

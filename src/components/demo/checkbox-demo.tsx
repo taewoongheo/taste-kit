@@ -1,11 +1,13 @@
 import { Checkbox, Text } from '@/components/ui';
-import { Spacing } from '@/constants';
-import { useThemeColor } from '@/hooks';
+import { Colors, Spacing } from '@/constants';
+import { useColorScheme } from '@/hooks';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 export function CheckboxDemo() {
-  const accent = useThemeColor('accent');
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme];
+  const accent = colors.accent;
   const sizes = ['sm', 'md'] as const;
   const labels = ['Small', 'Medium'];
   const [checks, setChecks] = useState([true, false]);

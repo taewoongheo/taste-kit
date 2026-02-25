@@ -1,5 +1,6 @@
 import { Colors, Layout } from '@/constants';
-import { StyleSheet, View, useColorScheme } from 'react-native';
+import { useColorScheme } from '@/hooks';
+import { StyleSheet, View } from 'react-native';
 
 export interface DividerProps {
   /** Left inset for list-style separator (default: 0) */
@@ -7,7 +8,7 @@ export interface DividerProps {
 }
 
 export function Divider({ inset = 0 }: DividerProps) {
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
 
   return (

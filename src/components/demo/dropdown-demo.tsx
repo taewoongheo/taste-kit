@@ -1,14 +1,15 @@
 import { Button, PanDropdown, Text } from '@/components/ui';
 import Dropdown from '@/components/ui/dropdown';
 import { Colors, Spacing } from '@/constants';
+import { useColorScheme } from '@/hooks';
 import { useState } from 'react';
-import { StyleSheet, View, useColorScheme } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const ITEMS = ['한식', '중식', '일식', '양식'];
 const POSITIONS = ['bottom', 'top', 'auto'] as const;
 
 export function DropdownDemo() {
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
   const [selected, setSelected] = useState('선택하세요');
 

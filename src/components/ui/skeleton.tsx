@@ -1,6 +1,7 @@
 import { Colors, Layout } from '@/constants';
+import { useColorScheme } from '@/hooks';
 import { useEffect } from 'react';
-import { StyleSheet, useColorScheme } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -21,7 +22,7 @@ export function Skeleton({
   radius = Layout.radiusSm,
   circle = false,
 }: SkeletonProps) {
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
   const opacity = useSharedValue(1);
 

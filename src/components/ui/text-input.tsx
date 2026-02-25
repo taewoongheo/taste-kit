@@ -20,7 +20,7 @@ export interface TextInputProps extends Omit<RNTextInputProps, 'style'> {
 }
 
 export function TextInput({ label, error, disabled = false, ...inputProps }: TextInputProps) {
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
   const [focused, setFocused] = useState(false);
 

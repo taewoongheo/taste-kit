@@ -1,9 +1,10 @@
 import { Button, Dialog, Text } from '@/components/ui';
 import { Colors, Spacing } from '@/constants';
-import { StyleSheet, View, useColorScheme } from 'react-native';
+import { useColorScheme } from '@/hooks';
+import { StyleSheet, View } from 'react-native';
 
 export function DialogDemo() {
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
 
   return (

@@ -1,6 +1,6 @@
 import { Button, Text } from '@/components/ui';
 import { Colors, Spacing } from '@/constants';
-import { useThemeColor } from '@/hooks';
+import { useColorScheme } from '@/hooks';
 import { Haptic } from '@/lib';
 import type { ReactNode } from 'react';
 import { useCallback, useRef } from 'react';
@@ -11,7 +11,6 @@ import {
   ScrollView,
   StyleSheet,
   View,
-  useColorScheme,
   useWindowDimensions,
 } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
@@ -45,8 +44,7 @@ export function OnboardingFunnel({
 }: OnboardingFunnelProps) {
   const { width } = useWindowDimensions();
   const { top, bottom } = useSafeAreaInsets();
-  const bg = useThemeColor('background');
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
 
   const scrollRef = useRef<ScrollView>(null);
@@ -80,7 +78,7 @@ export function OnboardingFunnel({
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: bg }]}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       {onSkip && (
         <View style={[styles.skipContainer, { top: top + Spacing.sm }]}>
           <Pressable onPress={onSkip}>
