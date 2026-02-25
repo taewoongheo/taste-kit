@@ -13,3 +13,4 @@ export { default as ToastDemo } from './toast-demo';
 export { NotificationDemo } from './notification-demo';
 export { RepositoryDemo } from './repository-demo';
 export { ReviewDemo } from './review-demo';
+export { PurchaseDemo } from './purchase-demo';

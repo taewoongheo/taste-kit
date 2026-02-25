@@ -31,6 +31,7 @@ const demos = [
   { title: 'Notification', route: '/demo/notification' },
   { title: 'Repository (CRUD)', route: '/demo/repository' },
   { title: 'In-App Review', route: '/demo/review' },
+  { title: 'In-App Purchase', route: '/demo/purchase' },
 ] as const;
 
 function useEntranceStyle(delay: number) {
