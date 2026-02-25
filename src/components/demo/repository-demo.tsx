@@ -35,6 +35,7 @@ export function RepositoryDemo() {
         />
         <Button
           size="sm"
+          fullWidth={false}
           onPress={async () => {
             if (!input.trim()) return;
             await repo.create(input.trim());
@@ -42,7 +43,9 @@ export function RepositoryDemo() {
             refresh();
           }}
         >
-          Add
+          <Text variant="caption" color="background" bold>
+            Add
+          </Text>
         </Button>
       </View>
 

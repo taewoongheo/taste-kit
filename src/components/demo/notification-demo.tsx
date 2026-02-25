@@ -25,7 +25,9 @@ export function NotificationDemo() {
           alert(granted ? 'Permission granted' : 'Permission denied');
         }}
       >
-        Request Permission
+        <Text variant="label" color="background" bold>
+          Request Permission
+        </Text>
       </Button>
 
       <Button
@@ -35,7 +37,9 @@ export function NotificationDemo() {
           refreshPending();
         }}
       >
-        Schedule After 5s
+        <Text variant="label" color="accent" bold>
+          Schedule After 5s
+        </Text>
       </Button>
 
       <Button
@@ -45,7 +49,9 @@ export function NotificationDemo() {
           refreshPending();
         }}
       >
-        Schedule Daily 09:00
+        <Text variant="label" color="accent" bold>
+          Schedule Daily 09:00
+        </Text>
       </Button>
 
       <Button
@@ -55,11 +61,15 @@ export function NotificationDemo() {
           refreshPending();
         }}
       >
-        Cancel All
+        <Text variant="label" color="background" bold>
+          Cancel All
+        </Text>
       </Button>
 
       <Button variant="ghost" onPress={refreshPending}>
-        Refresh Pending
+        <Text variant="label" color="accent" bold>
+          Refresh Pending
+        </Text>
       </Button>
 
       {pending.length > 0 && (

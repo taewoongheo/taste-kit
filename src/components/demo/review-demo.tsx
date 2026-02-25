@@ -43,7 +43,9 @@ export function ReviewDemo() {
           refresh();
         }}
       >
-        Track Launch
+        <Text variant="label" color="background" bold>
+          Track Launch
+        </Text>
       </Button>
 
       <Button
@@ -53,7 +55,9 @@ export function ReviewDemo() {
           if (!requested) alert('Conditions not met yet');
         }}
       >
-        Request If Ready
+        <Text variant="label" color="accent" bold>
+          Request If Ready
+        </Text>
       </Button>
 
       <Button
@@ -62,7 +66,9 @@ export function ReviewDemo() {
           await Review.forceRequest();
         }}
       >
-        Force Request (Demo)
+        <Text variant="label" color="accent" bold>
+          Force Request (Demo)
+        </Text>
       </Button>
 
       <Button
@@ -72,7 +78,9 @@ export function ReviewDemo() {
           refresh();
         }}
       >
-        Reset Tracker
+        <Text variant="label" color="background" bold>
+          Reset Tracker
+        </Text>
       </Button>
     </>
   );
