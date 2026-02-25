@@ -1,11 +1,11 @@
 import { AnimatedPressable, Button, Text } from '@/components/ui';
-import { Spacing, Springs, Timings } from '@/constants';
+import { Colors, Spacing, Springs, Timings } from '@/constants';
 import { useThemeColor } from '@/hooks';
 import { Haptic } from '@/lib';
 import { type ThemeMode, useAppStore } from '@/stores';
 import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, useColorScheme } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -79,6 +79,8 @@ export default function ExploreScreen() {
 function TokensContent() {
   const accent = useThemeColor('accent');
   const bgGrouped = useThemeColor('backgroundGrouped');
+  const colorScheme = useColorScheme() ?? 'light';
+  const colors = Colors[colorScheme];
   const themeMode = useAppStore((s) => s.themeMode);
   const setThemeMode = useAppStore((s) => s.setThemeMode);
 
@@ -125,11 +127,15 @@ function TokensContent() {
           {themeModes.map(({ mode, label }) => (
             <Button
               key={mode}
-              title={label}
+              fullWidth={false}
               variant={themeMode === mode ? 'primary' : 'secondary'}
               size="sm"
               onPress={() => setThemeMode(mode)}
-            />
+            >
+              <Text variant="label" color={themeMode === mode ? 'background' : 'accent'} bold>
+                {label}
+              </Text>
+            </Button>
           ))}
         </View>
       </Animated.View>

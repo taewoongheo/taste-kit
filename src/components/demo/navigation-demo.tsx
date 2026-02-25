@@ -7,14 +7,16 @@ export function NavigationDemo() {
     <>
       <Text variant="subtitle">Navigation</Text>
       <Button
-        title="온보딩 다시 보기"
         variant="secondary"
-        fullWidth
         onPress={() => {
           useAppStore.getState().setOnboarded(false);
           router.replace('/onboarding');
         }}
-      />
+      >
+        <Text variant="body" color="accent" bold>
+          온보딩 다시 보기
+        </Text>
+      </Button>
     </>
   );
 }

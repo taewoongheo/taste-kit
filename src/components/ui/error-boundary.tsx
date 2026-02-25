@@ -19,11 +19,15 @@ function DefaultFallback({ resetErrorBoundary }: FallbackProps) {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text variant="title">문제가 발생했습니다</Text>
       <View style={styles.messageWrap}>
-        <Text variant="body" color="textSecondary" align="center">
+        <Text variant="body" color="textSecondary" style={{ textAlign: 'center' }}>
           앱에서 오류가 발생했습니다.{'\n'}다시 시도해 주세요.
         </Text>
       </View>
-      <Button title="다시 시도" onPress={resetErrorBoundary} />
+      <Button fullWidth={false} onPress={resetErrorBoundary}>
+        <Text variant="label" color="background" bold>
+          다시 시도
+        </Text>
+      </Button>
     </View>
   );
 }

@@ -1,10 +1,12 @@
-export { AnimationsDemo } from './animations-demo';
+export { default as TagDemo } from './tag-demo';
 export { ButtonDemo } from './button-demo';
+export { CheckboxDemo } from './checkbox-demo';
+export { DialogDemo } from './dialog-demo';
 export { DividerDemo } from './divider-demo';
+export { DropdownDemo } from './dropdown-demo';
 export { ImageDemo } from './image-demo';
 export { InputDemo } from './input-demo';
-export { InteractionsDemo } from './interactions-demo';
 export { NavigationDemo } from './navigation-demo';
 export { SkeletonDemo } from './skeleton-demo';
 export { TextDemo } from './text-demo';
-export { ToggleDemo } from './toggle-demo';
+export { default as ToastDemo } from './toast-demo';

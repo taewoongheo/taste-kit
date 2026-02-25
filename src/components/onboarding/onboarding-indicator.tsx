@@ -1,5 +1,6 @@
 import { Colors, Spacing, Springs } from '@/constants';
-import { StyleSheet, View, useColorScheme } from 'react-native';
+import { useColorScheme } from '@/hooks';
+import { StyleSheet, View } from 'react-native';
 import Animated, { type SharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
 interface OnboardingIndicatorProps {
@@ -19,7 +20,7 @@ export function OnboardingIndicator({ count, activeIndex }: OnboardingIndicatorP
 }
 
 function Dot({ index, activeIndex }: { index: number; activeIndex: SharedValue<number> }) {
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
 
   const animatedStyle = useAnimatedStyle(() => {

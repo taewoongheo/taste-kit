@@ -2,12 +2,7 @@ import { Text } from '@/components/ui/text';
 import { Colors, Layout, Spacing, Typography } from '@/constants';
 import { useColorScheme } from '@/hooks';
 import { useState } from 'react';
-import {
-  type Control,
-  type FieldValues,
-  type Path,
-  useController,
-} from 'react-hook-form';
+import { type Control, type FieldValues, type Path, useController } from 'react-hook-form';
 import {
   TextInput as RNTextInput,
   type TextInputProps as RNTextInputProps,
@@ -25,7 +20,7 @@ export interface TextInputProps extends Omit<RNTextInputProps, 'style'> {
 }
 
 export function TextInput({ label, error, disabled = false, ...inputProps }: TextInputProps) {
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
   const [focused, setFocused] = useState(false);
 
@@ -69,8 +64,7 @@ export function TextInput({ label, error, disabled = false, ...inputProps }: Tex
   );
 }
 
-export interface ControlledTextInputProps<T extends FieldValues>
-  extends TextInputProps {
+export interface ControlledTextInputProps<T extends FieldValues> extends TextInputProps {
   name: Path<T>;
   control: Control<T>;
 }

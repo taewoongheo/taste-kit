@@ -5,33 +5,23 @@ import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
 export type TextVariant = keyof typeof Typography;
 export type TextColor = keyof (typeof Colors)['light'];
 
-export type TextWeight = '400' | '500' | '600' | '700';
-
-export interface TextProps extends Omit<RNTextProps, 'style'> {
-  /** Typography variant (default: 'body') */
+export interface TextProps extends RNTextProps {
   variant?: TextVariant;
-  /** Color token name or raw color value (default: 'text') */
+  bold?: boolean;
   color?: TextColor | (string & {});
-  /** Text alignment */
-  align?: 'left' | 'center' | 'right';
-  /** Override font weight from variant default */
-  weight?: TextWeight;
 }
 
-export function Text({ variant = 'body', color = 'text', align, weight, ...rest }: TextProps) {
+export function Text({ variant = 'body', bold, color = 'text', style, ...rest }: TextProps) {
   const colorScheme = useColorScheme();
   const tokens = Colors[colorScheme];
   const resolvedColor = color in tokens ? tokens[color as TextColor] : color;
 
+  const textStyle = Typography[variant];
+
   return (
     <RNText
       {...rest}
-      style={[
-        Typography[variant],
-        { color: resolvedColor },
-        align && { textAlign: align },
-        weight && { fontWeight: weight },
-      ]}
+      style={[textStyle, { color: resolvedColor }, bold && { fontWeight: 'bold' }, style]}
     />
   );
 }

@@ -1,12 +1,13 @@
 import { Button, Text } from '@/components/ui';
-import { Spacing } from '@/constants';
-import { useThemeColor } from '@/hooks';
+import { Colors, Spacing } from '@/constants';
+import { useColorScheme } from '@/hooks';
 import { Haptic } from '@/lib';
 import type { ReactNode } from 'react';
 import { useCallback, useRef } from 'react';
 import {
   type NativeScrollEvent,
   type NativeSyntheticEvent,
+  Pressable,
   ScrollView,
   StyleSheet,
   View,
@@ -43,7 +44,8 @@ export function OnboardingFunnel({
 }: OnboardingFunnelProps) {
   const { width } = useWindowDimensions();
   const { top, bottom } = useSafeAreaInsets();
-  const bg = useThemeColor('background');
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme];
 
   const scrollRef = useRef<ScrollView>(null);
   const currentIndex = useRef(0);
@@ -76,10 +78,14 @@ export function OnboardingFunnel({
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: bg }]}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       {onSkip && (
         <View style={[styles.skipContainer, { top: top + Spacing.sm }]}>
-          <Button title="건너뛰기" variant="ghost" size="sm" onPress={onSkip} />
+          <Pressable onPress={onSkip}>
+            <Text variant="label" color="accent">
+              건너뛰기
+            </Text>
+          </Pressable>
         </View>
       )}
 
@@ -94,10 +100,10 @@ export function OnboardingFunnel({
         {steps.map((step) => (
           <View key={step.title} style={[styles.step, { width }]}>
             {step.content && <View style={styles.content}>{step.content}</View>}
-            <Text variant="title" align="center">
+            <Text variant="title" style={{ textAlign: 'center' }}>
               {step.title}
             </Text>
-            <Text variant="body" color="textSecondary" align="center">
+            <Text variant="body" color="textSecondary" style={{ textAlign: 'center' }}>
               {step.description}
             </Text>
           </View>
@@ -106,11 +112,11 @@ export function OnboardingFunnel({
 
       <View style={[styles.footer, { paddingBottom: bottom + Spacing.md }]}>
         <OnboardingIndicator count={steps.length} activeIndex={activeIndex} />
-        <Button
-          title={currentIndex.current >= steps.length - 1 ? completeLabel : '다음'}
-          onPress={handleNext}
-          fullWidth
-        />
+        <Button onPress={handleNext} size="lg">
+          <Text variant="label" color="background" bold>
+            {currentIndex.current >= steps.length - 1 ? completeLabel : '다음'}
+          </Text>
+        </Button>
       </View>
     </View>
   );

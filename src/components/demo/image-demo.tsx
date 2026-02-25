@@ -6,11 +6,7 @@ export function ImageDemo() {
   return (
     <>
       <Text variant="subtitle">Image</Text>
-      <Image
-        source="https://picsum.photos/seed/taste-kit/400/200"
-        radius="lg"
-        contentFit="cover"
-      />
+      <Image source="https://picsum.photos/seed/taste-kit/400/200" radius="lg" contentFit="cover" />
       <View style={styles.row}>
         <Image
           source="https://picsum.photos/seed/avatar1/100/100"
