@@ -10,3 +10,6 @@ export { NavigationDemo } from './navigation-demo';
 export { SkeletonDemo } from './skeleton-demo';
 export { TextDemo } from './text-demo';
 export { default as ToastDemo } from './toast-demo';
+export { NotificationDemo } from './notification-demo';
+export { RepositoryDemo } from './repository-demo';
+export { ReviewDemo } from './review-demo';

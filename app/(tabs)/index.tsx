@@ -28,6 +28,9 @@ const demos = [
   { title: 'Checkbox', route: '/demo/checkbox' },
   { title: 'Dropdown', route: '/demo/dropdown' },
   { title: 'Toast', route: '/demo/toast' },
+  { title: 'Notification', route: '/demo/notification' },
+  { title: 'Repository (CRUD)', route: '/demo/repository' },
+  { title: 'In-App Review', route: '/demo/review' },
 ] as const;
 
 function useEntranceStyle(delay: number) {
