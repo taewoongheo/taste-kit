@@ -1,24 +1,21 @@
 import { AnimatedPressable, Button, Text } from '@/components/ui';
 import { Colors, Spacing } from '@/constants';
 import { useColorScheme } from '@/hooks';
-import { type Memo, useMemoRepository } from '@/lib';
-import { useCallback, useEffect, useState } from 'react';
+import { useMemoStore } from '@/stores';
+import { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
+import { useSQLiteContext } from 'expo-sqlite';
 
 export function RepositoryDemo() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
-  const repo = useMemoRepository();
-  const [memos, setMemos] = useState<Memo[]>([]);
+  const db = useSQLiteContext();
+  const { memos, isLoaded, init, create, remove } = useMemoStore();
   const [input, setInput] = useState('');
 
-  const refresh = useCallback(async () => {
-    setMemos(await repo.getAll());
-  }, [repo]);
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: load on mount
+  // biome-ignore lint/correctness/useExhaustiveDependencies: init once with db
   useEffect(() => {
-    refresh();
+    if (!isLoaded) init(db);
   }, []);
 
   return (
@@ -38,9 +35,8 @@ export function RepositoryDemo() {
           fullWidth={false}
           onPress={async () => {
             if (!input.trim()) return;
-            await repo.create(input.trim());
+            await create(input.trim());
             setInput('');
-            refresh();
           }}
         >
           <Text variant="caption" color="background" bold>
@@ -57,12 +53,7 @@ export function RepositoryDemo() {
               {memo.created_at}
             </Text>
           </View>
-          <AnimatedPressable
-            onPress={async () => {
-              await repo.remove(memo.id);
-              refresh();
-            }}
-          >
+          <AnimatedPressable onPress={() => remove(memo.id)}>
             <Text variant="label" color="destructive">
               Delete
             </Text>

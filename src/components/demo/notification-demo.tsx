@@ -33,12 +33,12 @@ export function NotificationDemo() {
       <Button
         variant="secondary"
         onPress={async () => {
-          await Notification.scheduleAfter('Test', 'This fires after 5 seconds', 5);
+          await Notification.scheduleAfter('Test', 'This fires after 10 seconds', 10);
           refreshPending();
         }}
       >
         <Text variant="label" color="accent" bold>
-          Schedule After 5s
+          Schedule After 10s
         </Text>
       </Button>
 
