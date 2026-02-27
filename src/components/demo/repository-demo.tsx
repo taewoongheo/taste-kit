@@ -2,21 +2,14 @@ import { AnimatedPressable, Button, Text } from '@/components/ui';
 import { Colors, Spacing } from '@/constants';
 import { useColorScheme } from '@/hooks';
 import { useMemoStore } from '@/stores';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { useSQLiteContext } from 'expo-sqlite';
 
 export function RepositoryDemo() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
-  const db = useSQLiteContext();
-  const { memos, isLoaded, init, create, remove } = useMemoStore();
+  const { memos, create, remove } = useMemoStore();
   const [input, setInput] = useState('');
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: init once with db
-  useEffect(() => {
-    if (!isLoaded) init(db);
-  }, []);
 
   return (
     <>

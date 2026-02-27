@@ -14,5 +14,12 @@
   "tabs": {
     "home": "홈",
     "explore": "탐색"
+  },
+  "home": {
+    "placeholder": "여기서 시작하세요"
+  },
+  "demo": {
+    "title": "컴포넌트",
+    "subtitle": "UI 컴포넌트 카탈로그"
   }
 }

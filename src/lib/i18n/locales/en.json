@@ -14,5 +14,12 @@
   "tabs": {
     "home": "Home",
     "explore": "Explore"
+  },
+  "home": {
+    "placeholder": "Start building here"
+  },
+  "demo": {
+    "title": "Components",
+    "subtitle": "UI component catalog"
   }
 }
